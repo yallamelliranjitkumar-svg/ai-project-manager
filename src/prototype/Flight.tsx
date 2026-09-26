@@ -3,12 +3,14 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
 import { chapters, footer, hero } from '../content/content'
+import { Nav } from '../sections/Nav'
+import { Footer } from '../sections/Footer'
 import './Flight.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
 // ─────────────────────────────────────────────────────────────
-// SCROLL FILM PROTOTYPE
+// SCROLL FILM (the home page)
 //
 // How it works, in plain English:
 //  • The page is very tall. A "stage" stays pinned to the screen while you scroll.
@@ -202,6 +204,7 @@ export function Flight() {
 
   return (
     <div ref={root}>
+      <Nav />
       <div className="flight">
         <div className="stage">
           {/* The film (16:9, covering the screen) with its overlays in the same box */}
@@ -236,7 +239,6 @@ export function Flight() {
             <path className="signal signal--human" pathLength={1} d="M 0 780 Q 400 640, 800 450" />
           </svg>
 
-          <div className="tag-prototype label">Prototype · scroll film</div>
           {!ready && loaded >= 0 && (
             <div className="loader label" role="status">
               Requesting docking clearance… {loaded}%
@@ -324,15 +326,10 @@ export function Flight() {
       </div>
 
       <section className="after">
-        <p className="label">End of prototype</p>
-        <p>
-          The flight film was generated with Kling AI from three reference images, shot by shot, then joined and
-          prepared for the web by Claude. See inspiration/scroll/log.txt for the full process.
-        </p>
-        <a className="label" href="/">
-          ← Back to the main site
-        </a>
+        <p className="label">How this was made</p>
+        <p>{footer.howMade}</p>
       </section>
+      <Footer showClosing={false} credit={footer.filmCredit} />
     </div>
   )
 }

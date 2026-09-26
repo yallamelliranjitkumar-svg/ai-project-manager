@@ -142,4 +142,7 @@ export const footer = {
   githubLabel: 'GitHub profile',
   repoLabel: 'See how this site was built',
   credit: 'Designed and built by directing Claude Code. Earth imagery: NASA.',
+  filmCredit: 'Designed and built by directing Claude Code. Flight film generated with Kling AI.',
+  howMade:
+    'The flight film was generated with Kling AI, shot by shot from start and end frames, then joined, checked frame by frame and prepared for the web by Claude Code. Every word, panel and button on top of it is real web page, built the same way.',
 }

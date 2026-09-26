@@ -2,7 +2,9 @@ import { footer, site } from '../content/content'
 import './Footer.css'
 
 // Section 6: closing line and links.
-export function Footer() {
+// The home page (flight film) already shows the closing line in its finale,
+// so it hides it here and passes its own credit line.
+export function Footer({ showClosing = true, credit = footer.credit }: { showClosing?: boolean; credit?: string }) {
   const links = [
     { href: site.linkedin, label: footer.linkedinLabel },
     { href: site.github, label: footer.githubLabel },
@@ -12,11 +14,13 @@ export function Footer() {
   return (
     <footer className="footer">
       <div className="container">
-        <p className="footer__closing">
-          <span>{footer.closing[0]}</span>
-          <span className="footer__closing-accent">{footer.closing[1]}</span>
-        </p>
-        <div className="footer__bottom">
+        {showClosing && (
+          <p className="footer__closing">
+            <span>{footer.closing[0]}</span>
+            <span className="footer__closing-accent">{footer.closing[1]}</span>
+          </p>
+        )}
+        <div className={`footer__bottom${showClosing ? '' : ' footer__bottom--flush'}`}>
           <div>
             <span className="label">{footer.connect}</span>
             <ul className="footer__links">
@@ -30,7 +34,7 @@ export function Footer() {
             </ul>
           </div>
           <p className="footer__credit">
-            © {new Date().getFullYear()} {site.name}. {footer.credit}
+            © {new Date().getFullYear()} {site.name}. {credit}
           </p>
         </div>
       </div>

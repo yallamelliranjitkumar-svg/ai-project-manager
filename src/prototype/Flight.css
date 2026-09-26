@@ -155,18 +155,6 @@
 }
 
 /* ── Small screen labels ── */
-.tag-prototype {
-  position: absolute;
-  top: var(--space-4);
-  left: var(--gutter);
-  z-index: 5;
-  padding: var(--space-1) var(--space-3);
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-pill);
-  background: rgba(4, 7, 13, 0.72);
-  color: var(--text-1);
-}
-
 .loader {
   position: absolute;
   z-index: 5;
