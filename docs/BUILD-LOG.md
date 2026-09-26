@@ -30,3 +30,18 @@ A plain-English diary of how this site was built by directing AI.
   - On phones the sphere covered the headline. It now sits smaller, in the lower right.
 - Known and planned: the sphere stays in one place for now. Phase 2 makes it move
   and change with scrolling.
+- Phase 1 went live on Vercel. Every push to GitHub now updates the site automatically.
+
+## 26 Sep 2026: New theme (Design v2)
+
+- Kept the story exactly as it was, but moved it into a new world: **Aurora
+  Station**, a hospital orbiting Earth.
+- The PROJECT sphere becomes the station's glowing core. The five AI agents take
+  posts at five wards, and the project being delivered is a sixth ward that
+  lights up at the end.
+- Colour now carries meaning: cyan = hospital, violet = AI, warm white = human,
+  amber = risk.
+- Rules I set for the AI: be inspired by classic sci-fi but copy nothing (no
+  franchise logos, ships or interface styles), use only public-domain or openly
+  licensed assets (NASA Earth imagery), and show no fake medical imagery.
+- The station shape is based on the Stanford torus, a public 1975 NASA design study.
