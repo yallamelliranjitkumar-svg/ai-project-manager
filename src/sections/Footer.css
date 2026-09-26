@@ -18,7 +18,7 @@
 }
 
 .footer__closing-accent {
-  color: var(--accent-glow);
+  color: var(--cyan-bright);
   margin-top: var(--space-3);
 }
 

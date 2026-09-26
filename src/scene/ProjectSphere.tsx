@@ -1,10 +1,11 @@
-import { useMemo, useRef } from 'react'
+import { Suspense, useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
 import * as THREE from 'three'
 import labelFont from '@fontsource/unbounded/files/unbounded-latin-500-normal.woff?url'
 
-// The glowing PROJECT sphere, drawn entirely in code (no model file).
+// The glowing PROJECT core at the centre of Aurora Station, drawn entirely
+// in code (no model file). Clinical white with a cyan rim: the hospital's colours.
 //
 // It is made of two layers:
 //  1. The body: a sphere whose edges glow violet (like a planet's atmosphere)
@@ -40,8 +41,8 @@ const bodyFragment = /* glsl */ `
     float edge = 1.0 - facing;
     float rim = pow(edge, 5.0);
     float core = pow(facing, 3.0);
-    // Dark body, bright violet edges, a faint inner light
-    vec3 color = uDeep * 0.05 + uDeep * core * 0.12 + uRim * rim * 2.0 + uCore * pow(edge, 10.0) * 1.5;
+    // A bright clinical-white heart fading to a glowing cyan edge
+    vec3 color = uDeep * 0.3 + uCore * core * 0.75 + uRim * rim * 2.2;
     gl_FragColor = vec4(color, 1.0);
     #include <colorspace_fragment>
   }
@@ -76,24 +77,27 @@ type Props = {
   scale?: number
   reducedMotion?: boolean
   strongHalo?: boolean
+  label?: boolean
+  labelY?: number
+  labelSize?: number
 }
 
-export function ProjectSphere({ position = [0, 0, 0], scale = 1, reducedMotion = false, strongHalo = false }: Props) {
+export function ProjectSphere({ position = [0, 0, 0], scale = 1, reducedMotion = false, strongHalo = false, label = true, labelY = -1.55 * scale, labelSize = 0.13 * scale }: Props) {
   const group = useRef<THREE.Group>(null)
 
   const bodyUniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uDeep: { value: new THREE.Color('#4c1d95') },
-      uRim: { value: new THREE.Color('#8b5cf6') },
-      uCore: { value: new THREE.Color('#c4b5fd') },
+      uDeep: { value: new THREE.Color('#0e5f73') },
+      uRim: { value: new THREE.Color('#3dd9eb') },
+      uCore: { value: new THREE.Color('#eaf8fb') },
     }),
     [],
   )
 
   const haloUniforms = useMemo(
     () => ({
-      uRim: { value: new THREE.Color('#8b5cf6') },
+      uRim: { value: new THREE.Color('#3dd9eb') },
       uStrength: { value: strongHalo ? 0.9 : 0.55 },
     }),
     [strongHalo],
@@ -136,17 +140,22 @@ export function ProjectSphere({ position = [0, 0, 0], scale = 1, reducedMotion =
           />
         </mesh>
       </group>
-      <Text
-        font={labelFont}
-        fontSize={0.13 * scale}
-        letterSpacing={0.3}
-        position={[0, -1.55 * scale, 0]}
-        color="#c4b5fd"
-        anchorX="center"
-        anchorY="middle"
-      >
-        PROJECT
-      </Text>
+      {/* The label waits for its font on its own, so the core never waits for it */}
+      {label && (
+        <Suspense fallback={null}>
+          <Text
+            font={labelFont}
+            fontSize={labelSize}
+            letterSpacing={0.3}
+            position={[0, labelY, 0]}
+            color="#8deff7"
+            anchorX="center"
+            anchorY="middle"
+          >
+            PROJECT
+          </Text>
+        </Suspense>
+      )}
     </group>
   )
 }

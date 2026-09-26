@@ -1,36 +1,48 @@
+/* Phone: waypoints stack upward along a dotted vertical path.
+   Desktop: waypoints climb diagonally from Earth (left, low) to orbit (right, high). */
 .journey {
   display: grid;
   gap: var(--space-7);
   margin-top: var(--space-8);
-  position: relative;
 }
 
 .journey__step {
   position: relative;
   padding-left: var(--space-6);
-  border-left: 1px solid var(--line-strong);
+  border-left: 1px dashed var(--line-strong);
 }
 
+/* The waypoint marker */
 .journey__step::before {
   content: '';
   position: absolute;
   left: -5px;
-  top: 6px;
+  top: 4px;
   width: 9px;
   height: 9px;
+  border: 1px solid var(--cyan);
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: var(--glow);
+  background: var(--bg-0);
+  box-shadow: var(--glow-cyan);
 }
 
-.journey__num {
+/* The last waypoint is the station, so it's filled */
+.journey__step:last-child::before {
+  background: var(--cyan);
+}
+
+.journey__alt {
   display: block;
-  font-size: var(--type-label);
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-family: var(--font-hud);
+  font-size: var(--type-hud);
+  letter-spacing: 0.12em;
   color: var(--text-3);
   margin-bottom: var(--space-2);
   font-variant-numeric: tabular-nums;
+}
+
+.journey__step:last-child .journey__alt {
+  color: var(--cyan);
 }
 
 .journey__step p {
@@ -38,22 +50,28 @@
   max-width: 34ch;
 }
 
-/* On wide screens the steps sit on one horizontal line */
 @media (min-width: 1024px) {
   .journey {
     grid-template-columns: repeat(4, 1fr);
     gap: var(--space-5);
+    align-items: end;
   }
 
   .journey__step {
     padding-left: 0;
     padding-top: var(--space-6);
     border-left: 0;
-    border-top: 1px solid var(--line-strong);
+    border-top: 1px dashed var(--line-strong);
   }
 
   .journey__step::before {
     left: 0;
     top: -5px;
   }
+
+  /* Each step sits higher than the last: a climb from Earth to orbit */
+  .journey__step:nth-child(1) { margin-bottom: 0; }
+  .journey__step:nth-child(2) { margin-bottom: var(--space-6); }
+  .journey__step:nth-child(3) { margin-bottom: var(--space-8); }
+  .journey__step:nth-child(4) { margin-bottom: var(--space-9); }
 }

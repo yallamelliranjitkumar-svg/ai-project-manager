@@ -9,6 +9,7 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/ranjit-kumar-yallamelli-6871b2179/',
   github: 'https://github.com/yallamelliranjitkumar-svg',
   repo: 'https://github.com/yallamelliranjitkumar-svg/ai-project-manager',
+  station: 'Aurora Station',
 }
 
 export const hero = {
@@ -16,7 +17,8 @@ export const hero = {
   lines: ["I don't code.", 'I build with AI.'],
   intro:
     'This site was designed, written and built by directing AI as a full product team: designer, developer, QA and project manager. I made the calls. Scroll to see how a project comes to life.',
-  scrollCue: 'Scroll to begin',
+  scrollCue: 'Begin approach',
+  status: 'Aurora Station · Low Earth orbit · 408 km',
 }
 
 export const journey = {
@@ -25,25 +27,29 @@ export const journey = {
   steps: [
     {
       title: 'Healthcare IT',
+      altitude: 'ALT 0 KM · EARTH',
       text: 'Where I learned that technology only matters when it works for clinicians and patients.',
     },
     {
       title: 'AI',
+      altitude: 'ALT 12 KM',
       text: 'Where I saw a new kind of teammate: fast, tireless, and in need of clear direction.',
     },
     {
       title: 'Product',
+      altitude: 'ALT 100 KM',
       text: 'Where ideas turn into things people actually use, one iteration at a time.',
     },
     {
       title: 'Project Management',
+      altitude: 'ALT 408 KM · AURORA STATION',
       text: 'Where it all comes together: people, risk, data and delivery, with a human making the call.',
     },
   ],
 }
 
 export const process = {
-  label: 'How this site was made',
+  label: 'Launch sequence · How this site was made',
   title: 'Idea to product, directed by a human',
   steps: [
     { title: 'Idea', text: 'A creative brief, written in plain English.' },
@@ -58,6 +64,7 @@ export const process = {
 export const chapters = [
   {
     id: 'define',
+    ward: 'Core',
     title: 'Define',
     question: "What's the problem?",
     text: 'Every project starts as a bare idea. Before any work begins, someone has to write down what success looks like.',
@@ -66,6 +73,7 @@ export const chapters = [
   },
   {
     id: 'plan',
+    ward: 'Core → Ring',
     title: 'Plan',
     question: 'What needs to happen?',
     text: 'The idea breaks into tasks, and the tasks connect. A plan is a network of dependencies, not a list.',
@@ -73,6 +81,7 @@ export const chapters = [
   },
   {
     id: 'delegate',
+    ward: 'Command Deck',
     title: 'Delegate',
     question: 'Who does what?',
     text: 'Specialist AI agents take on the work they are best at. The project manager decides who owns what.',
@@ -86,6 +95,7 @@ export const chapters = [
   },
   {
     id: 'monitor',
+    ward: 'Diagnostics Lab',
     title: 'Monitor',
     question: 'What could go wrong?',
     text: 'The agents never stop watching. When something drifts, it turns amber, long before it turns into a crisis.',
@@ -93,6 +103,7 @@ export const chapters = [
   },
   {
     id: 'decide',
+    ward: 'Core',
     title: 'Decide',
     question: 'Who makes the call?',
     text: 'AI brings the evidence. The human brings the context. Now it is your call.',
@@ -104,6 +115,7 @@ export const chapters = [
   },
   {
     id: 'deliver',
+    ward: 'New AI Ward',
     title: 'Deliver',
     question: 'Did it work?',
     text: 'Delivered. One week later than the AI suggested. Safe launch, clinicians on board.',
@@ -112,9 +124,9 @@ export const chapters = [
 ]
 
 export const experiments = {
-  label: 'Experiments',
+  label: 'Research modules',
   title: 'What I am building next',
-  soon: 'Coming soon',
+  soon: 'Status · In development',
   cards: [
     { title: 'AI PM', text: 'An AI co-pilot for project status, risks and next steps.' },
     { title: 'Healthcare AI', text: 'Small, safe AI tools for real clinical workflows.' },
@@ -125,9 +137,9 @@ export const experiments = {
 
 export const footer = {
   closing: ["AI doesn't replace the project manager.", 'It changes what the project manager can accomplish.'],
-  connect: "Let's talk",
+  connect: 'Open a channel',
   linkedinLabel: 'LinkedIn profile',
   githubLabel: 'GitHub profile',
   repoLabel: 'See how this site was built',
-  credit: 'Designed and built by directing Claude Code.',
+  credit: 'Designed and built by directing Claude Code. Earth imagery: NASA.',
 }

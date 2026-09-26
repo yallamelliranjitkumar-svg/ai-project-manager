@@ -32,5 +32,5 @@
 }
 
 .nav__link:hover {
-  border-color: var(--accent-bright);
+  border-color: var(--cyan);
 }

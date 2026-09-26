@@ -45,17 +45,17 @@ a {
 }
 
 a:hover {
-  color: var(--accent-bright);
+  color: var(--cyan-bright);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent-bright);
+  outline: 2px solid var(--cyan-bright);
   outline-offset: 3px;
   border-radius: var(--radius-s);
 }
 
 ::selection {
-  background: var(--accent);
+  background: var(--cyan-deep);
   color: var(--text-1);
 }
 
@@ -81,14 +81,15 @@ a:hover {
   padding-block: var(--section-space);
 }
 
-/* Small uppercase label, e.g. "THE JOURNEY" or "01 / 06" */
+/* Screen-style label in the HUD font, e.g. "03 / 06 · COMMAND DECK" */
 .label {
   display: inline-block;
-  font-size: var(--type-label);
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-family: var(--font-hud);
+  font-size: var(--type-hud);
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--accent-bright);
+  color: var(--cyan);
   font-variant-numeric: tabular-nums;
 }
 
@@ -114,19 +115,51 @@ a:hover {
   max-width: 60ch;
 }
 
-/* Frosted glass panel that sits over the 3D scene */
-.glass {
-  background: rgba(22, 19, 31, 0.92);
+/* Anything the AI does is violet */
+.ai-text {
+  color: var(--ai-glow);
+}
+
+/* ── HUD panel: the station's glass screens ─────────────────
+   Glass background + thin border + L-shaped "viewfinder" brackets
+   drawn in each corner. */
+.hud {
+  --bracket: var(--line-strong);
+  --bracket-size: 14px;
+  --glass: rgba(13, 24, 36, 0.92);
+  position: relative;
   border: 1px solid var(--line);
   border-radius: var(--radius-m);
+  background:
+    linear-gradient(var(--bracket), var(--bracket)) top left / var(--bracket-size) 1px no-repeat,
+    linear-gradient(var(--bracket), var(--bracket)) top left / 1px var(--bracket-size) no-repeat,
+    linear-gradient(var(--bracket), var(--bracket)) top right / var(--bracket-size) 1px no-repeat,
+    linear-gradient(var(--bracket), var(--bracket)) top right / 1px var(--bracket-size) no-repeat,
+    linear-gradient(var(--bracket), var(--bracket)) bottom left / var(--bracket-size) 1px no-repeat,
+    linear-gradient(var(--bracket), var(--bracket)) bottom left / 1px var(--bracket-size) no-repeat,
+    linear-gradient(var(--bracket), var(--bracket)) bottom right / var(--bracket-size) 1px no-repeat,
+    linear-gradient(var(--bracket), var(--bracket)) bottom right / 1px var(--bracket-size) no-repeat,
+    var(--glass);
+  transition:
+    border-color var(--dur-micro) var(--ease-out),
+    transform var(--dur-ui) var(--ease-out);
 }
 
 @media (min-width: 640px) {
-  .glass {
-    background: rgba(22, 19, 31, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+  .hud {
+    --glass: rgba(13, 24, 36, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   }
+}
+
+/* Thin glowing divider line that fades out to the right */
+.hud-divider {
+  height: 1px;
+  border: 0;
+  margin: var(--space-5) 0;
+  background: linear-gradient(to right, var(--cyan), rgba(61, 217, 235, 0));
+  opacity: 0.6;
 }
 
 /* Hidden visually but still read by screen readers */

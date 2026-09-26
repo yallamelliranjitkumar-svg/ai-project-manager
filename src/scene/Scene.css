@@ -13,7 +13,8 @@
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 70% 45%, rgba(196, 181, 253, 0.35) 0, rgba(139, 92, 246, 0.25) 10%, rgba(76, 29, 149, 0.15) 22%, transparent 40%),
+    radial-gradient(ellipse 120% 60% at 30% 120%, rgba(61, 140, 235, 0.35) 0, rgba(14, 95, 115, 0.2) 40%, transparent 60%),
+    radial-gradient(circle at 72% 40%, rgba(234, 248, 251, 0.35) 0, rgba(61, 217, 235, 0.2) 6%, transparent 18%),
     var(--bg-0);
 }
 

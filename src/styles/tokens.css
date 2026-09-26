@@ -1,32 +1,39 @@
-/* Design tokens: every value here comes from docs/DESIGN.md.
+/* Design tokens: every value here comes from docs/DESIGN.md (v2, Aurora Station).
    Change a value here and it changes everywhere on the site. */
 
 :root {
   /* Surfaces and text */
-  --bg-0: #07060b;
-  --bg-1: #0e0c16;
-  --bg-2: #16131f;
-  --line: rgba(237, 234, 245, 0.08);
-  --line-strong: rgba(237, 234, 245, 0.16);
-  --text-1: #edeaf5;
-  --text-2: #a7a1b8;
-  --text-3: #6e6882;
+  --bg-0: #04070d;
+  --bg-1: #08111b;
+  --bg-2: #0d1824;
+  --line: rgba(214, 236, 242, 0.08);
+  --line-strong: rgba(214, 236, 242, 0.18);
+  --text-1: #e8f1f4;
+  --text-2: #9db0bb;
+  --text-3: #607482;
 
-  /* Accent (violet) */
-  --accent: #8b5cf6;
-  --accent-bright: #a78bfa;
-  --accent-glow: #c4b5fd;
-  --accent-deep: #4c1d95;
-  --accent-soft: rgba(139, 92, 246, 0.14);
+  /* Colour roles: cyan = hospital, violet = AI, warm white = human, amber = risk */
+  --cyan: #3dd9eb;
+  --cyan-bright: #8deff7;
+  --cyan-deep: #0e5f73;
+  --cyan-soft: rgba(61, 217, 235, 0.12);
+  --clinic-white: #eaf8fb;
 
-  /* Status */
+  --ai: #8b5cf6;
+  --ai-bright: #a78bfa;
+  --ai-glow: #c4b5fd;
+  --ai-deep: #4c1d95;
+  --ai-soft: rgba(139, 92, 246, 0.14);
+
+  --human: #fff1dc;
+
   --warn: #f5a524;
   --warn-soft: rgba(245, 165, 36, 0.14);
-  --human: #f4f1ff;
 
   /* Fonts */
   --font-display: 'Unbounded', system-ui, sans-serif;
   --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-hud: 'JetBrains Mono Variable', ui-monospace, 'Cascadia Mono', Consolas, monospace;
 
   /* Type scale (fluid: grows from phone to desktop) */
   --type-hero: clamp(2.75rem, 1.4rem + 6.8vw, 7.5rem);
@@ -36,7 +43,7 @@
   --type-body-l: clamp(1.125rem, 1.08rem + 0.2vw, 1.25rem);
   --type-body: clamp(1rem, 0.98rem + 0.1vw, 1.0625rem);
   --type-small: 0.875rem;
-  --type-label: 0.75rem;
+  --type-hud: 0.75rem;
 
   /* Spacing (4px steps) */
   --space-1: 4px;
@@ -56,13 +63,15 @@
   --section-space: var(--space-9);
   --max-width: 1200px;
 
-  /* Corners */
-  --radius-s: 8px;
-  --radius-m: 16px;
+  /* Corners (tighter than v1: engineered hardware) */
+  --radius-s: 4px;
+  --radius-m: 10px;
   --radius-pill: 999px;
 
-  /* Glow (UI only) */
-  --glow: 0 0 32px rgba(139, 92, 246, 0.35);
+  /* Glows (UI only) */
+  --glow-cyan: 0 0 28px rgba(61, 217, 235, 0.35);
+  --glow-ai: 0 0 28px rgba(139, 92, 246, 0.4);
+  --glow-human: 0 0 32px rgba(255, 241, 220, 0.35);
 
   /* Motion */
   --dur-micro: 150ms;

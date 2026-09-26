@@ -2,7 +2,7 @@ import { useMemo, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-// A slow field of faint dust around the scene, which gives it depth.
+// A slow field of faint stars around the scene, which gives it depth.
 // Each speck is a soft round dot drawn by the graphics card.
 
 const vertex = /* glsl */ `
@@ -51,7 +51,7 @@ export function Particles({ count, reducedMotion = false }: Props) {
 
   const uniforms = useMemo(
     () => ({
-      uColor: { value: new THREE.Color('#a78bfa') },
+      uColor: { value: new THREE.Color('#cfe8ff') },
       uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
     }),
     [],

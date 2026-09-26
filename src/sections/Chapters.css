@@ -31,30 +31,52 @@
 
 .chapter__question {
   font-size: var(--type-body-l);
-  color: var(--accent-glow);
+  color: var(--cyan-bright);
   margin-top: var(--space-3);
 }
 
-.chapter__text {
-  margin-top: var(--space-5);
+.chapter__text--warn {
+  color: var(--warn);
 }
 
-/* Chapter 1: the project brief */
+/* Small violet "AI" tag, so AI is never shown by colour alone */
+.ai-tag {
+  display: inline-block;
+  margin-right: var(--space-2);
+  padding: 1px 6px;
+  border: 1px solid var(--ai);
+  border-radius: var(--radius-s);
+  background: var(--ai-soft);
+  color: var(--ai-glow);
+  font-family: var(--font-hud);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  vertical-align: 0.1em;
+}
+
+/* Chapter 1: the project brief, like a readout on screen */
 .chapter__brief {
   margin-top: var(--space-5);
   padding: var(--space-4);
-  border-left: 2px solid var(--accent);
-  background: var(--accent-soft);
+  border-left: 2px solid var(--cyan);
+  background: var(--cyan-soft);
   border-radius: 0 var(--radius-s) var(--radius-s) 0;
   color: var(--text-1);
-  font-size: var(--type-small);
+  font-family: var(--font-hud);
+  font-size: 0.8125rem;
+  line-height: 1.7;
 }
 
 /* Chapter 2: the task count */
 .chapter__stat {
   margin-top: var(--space-5);
-  font-weight: 600;
-  color: var(--text-1);
+  font-family: var(--font-hud);
+  font-size: var(--type-small);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan);
   font-variant-numeric: tabular-nums;
 }
 
@@ -70,6 +92,7 @@
   gap: var(--space-1);
   padding: var(--space-3) var(--space-4);
   border: 1px solid var(--line);
+  border-left: 2px solid var(--ai);
   border-radius: var(--radius-s);
 }
 
@@ -83,37 +106,45 @@
   font-size: var(--type-small);
 }
 
-/* Chapter 4: amber warnings */
+/* Chapter 4: amber alerts */
 .chapter__warnings {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: var(--space-2);
   margin-top: var(--space-5);
 }
 
 .chapter__warning {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-pill);
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid rgba(245, 165, 36, 0.35);
+  border-radius: var(--radius-s);
   background: var(--warn-soft);
   color: var(--warn);
   font-size: var(--type-small);
   font-weight: 500;
 }
 
-.chapter__warning::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+.chapter__warning-tag {
+  font-family: var(--font-hud);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 1px 6px;
+  border-radius: var(--radius-s);
   background: var(--warn);
+  color: var(--bg-0);
+  animation: alert-pulse 1.2s var(--ease-in-out) infinite;
+}
+
+@keyframes alert-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
 }
 
 /* Chapter 5: the decision */
 .chapter__rec {
-  margin-top: var(--space-5);
   color: var(--text-1);
 }
 
@@ -150,17 +181,15 @@
 }
 
 .btn--primary {
-  background: var(--accent);
-  color: var(--text-1);
-  border: 1px solid var(--accent);
+  background: var(--cyan-soft);
+  color: var(--cyan-bright);
+  border: 1px solid var(--cyan);
 }
 
-.btn--primary:hover,
-.btn--primary[aria-pressed='true'] {
-  background: var(--accent-bright);
-  border-color: var(--accent-bright);
-  box-shadow: var(--glow);
+.btn--primary:hover {
+  background: var(--cyan);
   color: var(--bg-0);
+  box-shadow: var(--glow-cyan);
 }
 
 .btn--secondary {
@@ -170,10 +199,31 @@
 }
 
 .btn--secondary:hover {
-  border-color: var(--accent-bright);
+  border-color: var(--cyan);
 }
 
-.btn--secondary[aria-pressed='true'] {
-  border-color: var(--accent-bright);
-  background: var(--accent-soft);
+/* "Accept AI recommendation" carries a small violet dot */
+.btn--ai::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: var(--space-2);
+  border-radius: 50%;
+  background: var(--ai);
+  vertical-align: 0.15em;
+}
+
+.btn--ai[aria-pressed='true'] {
+  border-color: var(--ai);
+  background: var(--ai-soft);
+  box-shadow: var(--glow-ai);
+}
+
+/* "Override with human judgement" glows warm white when chosen */
+.btn--human[aria-pressed='true'] {
+  background: var(--human);
+  border-color: var(--human);
+  color: var(--bg-0);
+  box-shadow: var(--glow-human);
 }

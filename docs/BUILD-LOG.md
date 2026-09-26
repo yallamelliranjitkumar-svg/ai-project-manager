@@ -45,3 +45,23 @@ A plain-English diary of how this site was built by directing AI.
   franchise logos, ships or interface styles), use only public-domain or openly
   licensed assets (NASA Earth imagery), and show no fake medical imagery.
 - The station shape is based on the Stanford torus, a public 1975 NASA design study.
+
+## 26 Sep 2026: Re-theme build
+
+- Downloaded three public-domain NASA images of Earth (day surface, city
+  lights, clouds) and shrank them from 4.1 MB to about 620 KB for computers
+  and 180 KB for phones.
+- Built an animated Earth: it turns slowly, clouds drift, cities glow on the
+  night side, and a blue atmosphere glows at the edge.
+- Built Aurora Station in code: a ring with six wards, spokes, solar panels,
+  twinkling window lights and the glowing PROJECT core.
+- Restyled every section: cyan hospital colours, violet for AI, HUD glass
+  panels with viewfinder corners, and JetBrains Mono for screen readouts.
+  Examples: the journey became a flight path (altitude 0 km → 408 km), and the
+  process strip became a launch countdown (T-5 → T-0).
+- Fixes made while reviewing in the browser:
+  - Earth first looked like a small globe showing polar ice. It is now huge and
+    far away, so only its curved edge shows.
+  - Earth was too bright behind the text. Moving the sun behind the planet put
+    most of it in night.
+  - The 3D no longer waits for the label font before appearing.

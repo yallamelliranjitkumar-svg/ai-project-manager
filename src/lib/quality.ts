@@ -4,6 +4,7 @@
 export type Quality = {
   low: boolean
   particles: number
+  windows: number
   bloom: boolean
   maxPixelRatio: number
   reducedMotion: boolean
@@ -16,6 +17,7 @@ export function getQuality(): Quality {
   return {
     low,
     particles: low ? 800 : 3000,
+    windows: low ? 200 : 600,
     bloom: !low,
     maxPixelRatio: low ? 1.5 : 2,
     reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
