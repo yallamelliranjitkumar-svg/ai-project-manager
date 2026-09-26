@@ -65,3 +65,25 @@ A plain-English diary of how this site was built by directing AI.
   - Earth was too bright behind the text. Moving the sun behind the planet put
     most of it in night.
   - The 3D no longer waits for the label font before appearing.
+
+## 26–27 Sep 2026: The scroll film (prototype page)
+
+- Collected three reference images (spaceship, space dock, nebula) and planned a
+  scroll story: the ship (the project) flies through the six stages and docks at
+  Aurora Station (docs/SCROLL-ANIMATION-PLAN.md).
+- Built a free parallax prototype first to test the scroll timing.
+- Generated the film in Kling AI, shot by shot, using start and end frames that
+  Claude built from cut-outs of the ship and station. Around 20 takes in total.
+  Every take, cost and lesson is logged.
+- Lessons: full 360° orbits melt when the AI has never seen the ship's back;
+  generating a rear view fixed that. Binding the ship "element" pulls it toward
+  the camera, so don't bind it when the ship should stay small. Keep the ship's
+  on-screen direction consistent, or change sides only after a head-on,
+  tail-on or top-down view.
+- Claude joined the shots into one 46-second film, checked every join frame by
+  frame, removed frozen tails, and made web versions (1080p for computers,
+  540p for phones) that scrub instantly as you scroll.
+- The prototype page plays the film by scroll with the chapter text, AI agent
+  tags, alerts, the decision buttons and labelled station rings on top.
+- Fixes from review: readable text over bright clouds, sharper film, finale
+  labels in dark glass tags, and the complete station always visible.

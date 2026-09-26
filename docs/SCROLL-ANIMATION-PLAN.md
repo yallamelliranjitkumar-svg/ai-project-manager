@@ -157,3 +157,68 @@ generating and choosing clips. Steps 6–7 take about 1–2 building sessions.
    usually add watermarks.
 6. **Design update:** once approved, DESIGN.md gets a v3 section for the new
    station shape and the film-based scroll.
+
+---
+
+## 9. Next: all-angle coverage (plan only, budget 115 Kling credits)
+
+**Goal:** show the ship from the right, left, front, back and top as it moves
+through the chapters, without it ever looking like it turns back.
+
+**Rule (agreed):** the ship may point left on screen when we see its left side,
+as long as a **neutral view** comes first: head-on (front), tail-on (back) or
+top-down. Neutral views have no left/right, so changing sides after one reads
+as the camera moving, not the ship reversing.
+
+### New flow of views
+
+| Chapter | View sequence | Source | Credits |
+|---|---|---|---|
+| Define | right side, climbing | existing shot 1 | 0 |
+| Plan | right → **front** (neutral) → **left side** | existing shot 2, full orbit restored (frames 0–68) | 0 |
+| Delegate | left → **top-down** (neutral) → right, nebula appears | **new shot A** | ~30 |
+| Monitor | right → **back** (neutral, four engines, lightning) | existing shot 4c | 0 |
+| Decide | back → **left side**, holding at the storm's edge | **new shot C** | ~30 |
+| Deliver | left → **front** (neutral, bursting out of the storm) → right, station ahead | **new shot D** | ~30 |
+| Deliver | fly to the station and dock | existing shot 7 | 0 |
+| Finale | whole station over Earth | existing shot 8 | 0 |
+
+Total: **~90 credits**, leaving ~25 in reserve (not enough for a full retake of a
+5-second shot, so a failed shot means pausing to decide: top up, or accept).
+
+### Shot details (all 720p · 5s · Native Audio off · element "spaceship" bound)
+
+**Shot A: Delegate, over the top**
+- Start frame: `C2-ship-other-side.jpg` (left side, end of the full orbit)
+- End frame: `D-ship-at-nebula.jpg` (right side, nebula ahead)
+- Prompt: *The camera rises smoothly up and over the spaceship, looking straight
+  down on its top as it flies forward, then descends on its other side as a
+  glowing violet and blue nebula rises into view ahead. One continuous move, no
+  cuts. The spaceship keeps its exact shape, details and blue lights. No text,
+  no logos, no extra ships, no camera shake.*
+- Risk: the top view isn't in the element (no free slot). If the top melts,
+  swap the element's side angle for `R-ship-top.png` and retry.
+
+**Shot C: Decide, the pause from the other side**
+- Start frame: `E3R-shot4c-last-frame.jpg` (tail-on, heading right into the storm)
+- End frame: **new keyframe L** (built by Claude): the ship's left side at the
+  storm's edge, from the orbit's left-side view, cut out and placed on the nebula
+- Prompt: *The spaceship holds position at the edge of the storm, engines
+  dimming to a low idle glow. The camera slowly circles from behind the ship
+  around to its left side. Lightning flickers quietly deep in the nebula. Tense,
+  calm, suspended moment. …(same closing rules)*
+
+**Shot D: Deliver, breaking out head-on**
+- Start frame: last frame of shot C (left side)
+- End frame: `F-station-ahead.jpg` (right side, station ahead), so it still
+  joins the docking shot seamlessly
+- Prompt: *The spaceship's engines flare and it bursts out of the storm straight
+  toward the camera, head-on, then the camera swings around to its right side as
+  it flies on and a ring-shaped space station appears ahead. …(same rules)*
+
+### Order of work
+1. Claude: build keyframe L, restore the full orbit in the edit (free).
+2. Shot A → review → Shot C → review → Shot D → review (stop if a shot fails;
+   the reserve won't cover a retake).
+3. Claude: rejoin the film, check joins and views frame by frame, re-encode for
+   the web, update the prototype page's chapter timings.
