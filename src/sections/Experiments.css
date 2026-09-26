@@ -1,0 +1,39 @@
+.experiments {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-8);
+}
+
+.experiment {
+  padding: var(--space-6);
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  transition:
+    border-color var(--dur-micro) var(--ease-out),
+    transform var(--dur-ui) var(--ease-out);
+}
+
+.experiment:hover {
+  border-color: var(--line-strong);
+  transform: translateY(-4px);
+}
+
+.experiment__tag {
+  justify-self: start;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent-glow);
+  font-size: var(--type-label);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+@media (min-width: 768px) {
+  .experiments {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

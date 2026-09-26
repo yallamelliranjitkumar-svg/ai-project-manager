@@ -1,0 +1,23 @@
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  animation: scene-in var(--dur-story) var(--ease-out) both;
+}
+
+/* Shown instead of the 3D scene if the device can't draw 3D */
+.scene-fallback {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 70% 45%, rgba(196, 181, 253, 0.35) 0, rgba(139, 92, 246, 0.25) 10%, rgba(76, 29, 149, 0.15) 22%, transparent 40%),
+    var(--bg-0);
+}
+
+@keyframes scene-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

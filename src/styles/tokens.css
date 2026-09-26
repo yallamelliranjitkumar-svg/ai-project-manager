@@ -1,0 +1,88 @@
+/* Design tokens: every value here comes from docs/DESIGN.md.
+   Change a value here and it changes everywhere on the site. */
+
+:root {
+  /* Surfaces and text */
+  --bg-0: #07060b;
+  --bg-1: #0e0c16;
+  --bg-2: #16131f;
+  --line: rgba(237, 234, 245, 0.08);
+  --line-strong: rgba(237, 234, 245, 0.16);
+  --text-1: #edeaf5;
+  --text-2: #a7a1b8;
+  --text-3: #6e6882;
+
+  /* Accent (violet) */
+  --accent: #8b5cf6;
+  --accent-bright: #a78bfa;
+  --accent-glow: #c4b5fd;
+  --accent-deep: #4c1d95;
+  --accent-soft: rgba(139, 92, 246, 0.14);
+
+  /* Status */
+  --warn: #f5a524;
+  --warn-soft: rgba(245, 165, 36, 0.14);
+  --human: #f4f1ff;
+
+  /* Fonts */
+  --font-display: 'Unbounded', system-ui, sans-serif;
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Type scale (fluid: grows from phone to desktop) */
+  --type-hero: clamp(2.75rem, 1.4rem + 6.8vw, 7.5rem);
+  --type-chapter: clamp(2.5rem, 1.5rem + 5vw, 5.5rem);
+  --type-h2: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+  --type-h3: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+  --type-body-l: clamp(1.125rem, 1.08rem + 0.2vw, 1.25rem);
+  --type-body: clamp(1rem, 0.98rem + 0.1vw, 1.0625rem);
+  --type-small: 0.875rem;
+  --type-label: 0.75rem;
+
+  /* Spacing (4px steps) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --space-11: 192px;
+
+  /* Layout */
+  --gutter: 16px;
+  --section-space: var(--space-9);
+  --max-width: 1200px;
+
+  /* Corners */
+  --radius-s: 8px;
+  --radius-m: 16px;
+  --radius-pill: 999px;
+
+  /* Glow (UI only) */
+  --glow: 0 0 32px rgba(139, 92, 246, 0.35);
+
+  /* Motion */
+  --dur-micro: 150ms;
+  --dur-ui: 300ms;
+  --dur-enter: 600ms;
+  --dur-story: 1200ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --gutter: 24px;
+    --section-space: var(--space-10);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 48px;
+    --section-space: var(--space-11);
+  }
+}

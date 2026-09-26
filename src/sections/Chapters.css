@@ -1,0 +1,179 @@
+.chapter {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-9);
+}
+
+.chapter__inner {
+  display: flex;
+}
+
+.chapter--right .chapter__inner {
+  justify-content: flex-end;
+}
+
+.chapter__panel {
+  width: 100%;
+  max-width: 480px;
+  padding: var(--space-6);
+}
+
+.chapter__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--type-chapter);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text-1);
+  margin-top: var(--space-4);
+}
+
+.chapter__question {
+  font-size: var(--type-body-l);
+  color: var(--accent-glow);
+  margin-top: var(--space-3);
+}
+
+.chapter__text {
+  margin-top: var(--space-5);
+}
+
+/* Chapter 1: the project brief */
+.chapter__brief {
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border-left: 2px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 0 var(--radius-s) var(--radius-s) 0;
+  color: var(--text-1);
+  font-size: var(--type-small);
+}
+
+/* Chapter 2: the task count */
+.chapter__stat {
+  margin-top: var(--space-5);
+  font-weight: 600;
+  color: var(--text-1);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Chapter 3: agent list */
+.chapter__agents {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.chapter__agent {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+}
+
+.chapter__agent-name {
+  color: var(--text-1);
+  font-weight: 600;
+  font-size: var(--type-small);
+}
+
+.chapter__agent-role {
+  font-size: var(--type-small);
+}
+
+/* Chapter 4: amber warnings */
+.chapter__warnings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.chapter__warning {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-size: var(--type-small);
+  font-weight: 500;
+}
+
+.chapter__warning::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warn);
+}
+
+/* Chapter 5: the decision */
+.chapter__rec {
+  margin-top: var(--space-5);
+  color: var(--text-1);
+}
+
+.chapter__missing {
+  margin-top: var(--space-3);
+  font-size: var(--type-small);
+}
+
+.chapter__choices {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+/* Buttons */
+.btn {
+  min-height: 44px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-s);
+  font: inherit;
+  font-size: var(--type-small);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-micro) var(--ease-out),
+    border-color var(--dur-micro) var(--ease-out),
+    color var(--dur-micro) var(--ease-out),
+    box-shadow var(--dur-ui) var(--ease-out),
+    transform var(--dur-micro) var(--ease-out);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--text-1);
+  border: 1px solid var(--accent);
+}
+
+.btn--primary:hover,
+.btn--primary[aria-pressed='true'] {
+  background: var(--accent-bright);
+  border-color: var(--accent-bright);
+  box-shadow: var(--glow);
+  color: var(--bg-0);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--text-1);
+  border: 1px solid var(--line-strong);
+}
+
+.btn--secondary:hover {
+  border-color: var(--accent-bright);
+}
+
+.btn--secondary[aria-pressed='true'] {
+  border-color: var(--accent-bright);
+  background: var(--accent-soft);
+}

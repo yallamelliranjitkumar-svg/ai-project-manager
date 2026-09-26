@@ -1,0 +1,72 @@
+.process {
+  background: linear-gradient(to bottom, transparent, rgba(14, 12, 22, 0.8) 20%, rgba(14, 12, 22, 0.8) 80%, transparent);
+}
+
+.process__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6) var(--space-4);
+  margin-top: var(--space-8);
+}
+
+.process__step p {
+  margin-top: var(--space-3);
+  font-size: var(--type-small);
+  max-width: 24ch;
+}
+
+.process__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--bg-2);
+  color: var(--text-1);
+  font-weight: 600;
+  font-size: var(--type-small);
+}
+
+.process__num {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-glow);
+  font-size: var(--type-label);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Claude is the step the whole site is about, so it glows */
+.process__step:nth-child(3) .process__chip {
+  border-color: var(--accent);
+  box-shadow: var(--glow);
+}
+
+@media (min-width: 640px) {
+  .process__list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .process__list {
+    grid-template-columns: repeat(6, 1fr);
+    position: relative;
+  }
+
+  /* The thin violet line joining the steps */
+  .process__list::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, var(--accent-deep), var(--accent), var(--accent-deep));
+    z-index: -1;
+  }
+}

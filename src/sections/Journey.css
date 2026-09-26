@@ -1,0 +1,59 @@
+.journey {
+  display: grid;
+  gap: var(--space-7);
+  margin-top: var(--space-8);
+  position: relative;
+}
+
+.journey__step {
+  position: relative;
+  padding-left: var(--space-6);
+  border-left: 1px solid var(--line-strong);
+}
+
+.journey__step::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: var(--glow);
+}
+
+.journey__num {
+  display: block;
+  font-size: var(--type-label);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--text-3);
+  margin-bottom: var(--space-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.journey__step p {
+  margin-top: var(--space-2);
+  max-width: 34ch;
+}
+
+/* On wide screens the steps sit on one horizontal line */
+@media (min-width: 1024px) {
+  .journey {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
+  }
+
+  .journey__step {
+    padding-left: 0;
+    padding-top: var(--space-6);
+    border-left: 0;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .journey__step::before {
+    left: 0;
+    top: -5px;
+  }
+}

@@ -1,0 +1,56 @@
+.hero {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-10) var(--space-8);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--type-hero);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--text-1);
+  margin-top: var(--space-5);
+}
+
+.hero__line {
+  display: block;
+}
+
+.hero__line + .hero__line {
+  color: var(--accent-glow);
+}
+
+.hero__intro {
+  margin-top: var(--space-6);
+  max-width: 46ch;
+}
+
+.hero__cue {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-8);
+  min-height: 44px;
+  font-size: var(--type-label);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.hero__cue-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: var(--glow);
+  animation: cue-pulse 4s var(--ease-in-out) infinite;
+}
+
+@keyframes cue-pulse {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(6px); opacity: 0.5; }
+}
