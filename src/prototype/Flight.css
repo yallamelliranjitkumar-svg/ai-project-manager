@@ -1,0 +1,595 @@
+/* Scroll-flight prototype. Uses the same design tokens as the main site. */
+
+/* The page is tall; each 1% of the flight = 12% of a screen of scrolling */
+.flight {
+  position: relative;
+  height: 1200svh;
+}
+
+/* The stage stays pinned to the screen while the page scrolls past */
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--bg-0);
+}
+
+.camera {
+  position: absolute;
+  inset: 0;
+}
+
+/* Fills the screen, cropping edges if needed (backgrounds) */
+.cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A 16:9 box covering the screen. Ship, station and their overlays all share
+   this box, so the cut-outs line up with the original photos. */
+.frame {
+  --fw: max(100vw, 177.78svh);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--fw);
+  height: calc(var(--fw) * 0.5625);
+  margin-left: calc(var(--fw) / -2);
+  margin-top: calc(var(--fw) * -0.28125);
+  display: block;
+}
+
+/* Portrait phones: keep more of the picture's width visible */
+@media (orientation: portrait) {
+  .frame {
+    --fw: 190vw;
+  }
+}
+
+img.frame,
+img.cover {
+  pointer-events: none;
+  user-select: none;
+}
+
+.station,
+.station-scene,
+.nebula,
+.stars,
+.drone,
+.hazard,
+.dock-pulse,
+.ring-label,
+.station-alert,
+.signal-meet,
+.signal-tag,
+.flash,
+.ship {
+  visibility: hidden;
+}
+
+/* ── Stars: repeating tiles of tiny dots; moving them creates parallax ── */
+.stars {
+  position: absolute;
+  inset: -10%;
+  pointer-events: none;
+}
+
+.stars--far {
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, rgba(207, 232, 255, 0.7), transparent),
+    radial-gradient(1px 1px at 120px 80px, rgba(207, 232, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 200px 160px, rgba(207, 232, 255, 0.8), transparent),
+    radial-gradient(1px 1px at 60px 200px, rgba(207, 232, 255, 0.4), transparent),
+    radial-gradient(1.5px 1.5px at 170px 20px, rgba(207, 232, 255, 0.9), transparent);
+  background-size: 240px 240px;
+}
+
+.stars--near {
+  background-image:
+    radial-gradient(2px 2px at 80px 120px, rgba(234, 248, 251, 0.9), transparent),
+    radial-gradient(1.5px 1.5px at 380px 60px, rgba(234, 248, 251, 0.7), transparent),
+    radial-gradient(2.5px 2.5px at 260px 400px, rgba(141, 239, 247, 0.8), transparent),
+    radial-gradient(1.5px 1.5px at 460px 300px, rgba(234, 248, 251, 0.6), transparent);
+  background-size: 520px 520px;
+  filter: blur(0.3px);
+}
+
+/* Blue haze of Earth's atmosphere under the ship at launch */
+.earth-glow {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -30%;
+  height: 60%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(61, 140, 235, 0.55), rgba(14, 95, 115, 0.2) 45%, transparent 70%);
+  pointer-events: none;
+}
+
+.flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 55% 40%, rgba(196, 181, 253, 0.9), rgba(139, 92, 246, 0.3) 40%, transparent 70%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(4, 7, 13, 0.7) 100%),
+    linear-gradient(to right, rgba(4, 7, 13, 0.55), transparent 40%);
+}
+
+/* ── Overlays inside the frame ── */
+.overlay {
+  pointer-events: none;
+}
+
+.overlay svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.route-line,
+.signal {
+  fill: none;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.route-line {
+  stroke: var(--cyan);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 6px var(--cyan));
+}
+
+.route-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border: 1px solid var(--cyan-bright);
+  border-radius: 50%;
+  background: var(--bg-0);
+  box-shadow: var(--glow-cyan);
+}
+
+.signal--ai {
+  stroke: var(--ai-bright);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 6px var(--ai));
+}
+
+.signal--human {
+  stroke: var(--human);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 6px rgba(255, 241, 220, 0.8));
+}
+
+.signal-meet {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff, var(--human) 40%, var(--ai) 100%);
+  box-shadow: 0 0 24px 6px rgba(255, 241, 220, 0.5), 0 0 40px 12px rgba(139, 92, 246, 0.35);
+}
+
+.signal-tag {
+  position: absolute;
+  font-family: var(--font-hud);
+  font-size: var(--type-hud);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.signal-tag--human {
+  color: var(--human);
+}
+
+/* AI drones: small violet craft with a name tag */
+.drone {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  translate: -50% -50%;
+}
+
+.drone__body {
+  width: 14px;
+  height: 14px;
+  transform: rotate(45deg);
+  border: 1.5px solid var(--ai-glow);
+  background: var(--ai-soft);
+  box-shadow: var(--glow-ai);
+}
+
+.drone__alert {
+  position: absolute;
+  left: -7px;
+  top: 50%;
+  width: 28px;
+  height: 28px;
+  margin-top: -14px;
+  border: 2px solid var(--warn);
+  border-radius: 50%;
+  visibility: hidden;
+  animation: pulse 1.2s var(--ease-in-out) infinite;
+}
+
+.drone__label {
+  font-family: var(--font-hud);
+  font-size: var(--type-hud);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ai-glow);
+  white-space: nowrap;
+  text-shadow: 0 0 8px rgba(4, 7, 13, 0.9);
+}
+
+.hazard {
+  position: absolute;
+  padding: 2px 8px;
+  border: 1px solid var(--warn);
+  border-radius: var(--radius-s);
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-family: var(--font-hud);
+  font-size: var(--type-hud);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  translate: -50% -50%;
+}
+
+.dock-pulse {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  margin: -30px 0 0 -30px;
+  border: 2px solid var(--cyan-bright);
+  border-radius: 50%;
+  box-shadow: var(--glow-cyan);
+}
+
+.ring-label {
+  position: absolute;
+  padding-left: 40px;
+  font-family: var(--font-hud);
+  font-size: clamp(0.625rem, 0.5rem + 0.4vw, 0.8125rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan-bright);
+  white-space: nowrap;
+  translate: 0 -50%;
+  text-shadow: 0 0 10px rgba(4, 7, 13, 0.9);
+}
+
+/* The thin line from the label to the ring */
+.ring-label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 32px;
+  height: 1px;
+  background: var(--cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+.station-alert {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: var(--warn);
+  box-shadow: 0 0 16px 4px rgba(245, 165, 36, 0.6);
+  animation: pulse 1.2s var(--ease-in-out) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+/* ── Text panels ── */
+.tag-prototype {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--gutter);
+  z-index: 5;
+  color: var(--text-3);
+}
+
+.panel {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  width: min(420px, calc(100vw - var(--gutter) * 2));
+  padding: var(--space-6);
+  visibility: hidden;
+  translate: 0 -50%;
+}
+
+.panel--left {
+  left: var(--gutter);
+}
+
+.panel--right {
+  right: var(--gutter);
+}
+
+.panel--hero {
+  left: var(--gutter);
+  width: min(620px, calc(100vw - var(--gutter) * 2));
+  padding: 0;
+  visibility: visible;
+}
+
+.panel__hero-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 1rem + 4vw, 4.75rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--text-1);
+  margin-top: var(--space-5);
+  text-shadow: 0 4px 30px rgba(4, 7, 13, 0.7);
+}
+
+.panel__cue {
+  margin-top: var(--space-7);
+}
+
+.panel__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 1.4rem + 3vw, 3.5rem);
+  line-height: 1;
+  color: var(--text-1);
+  margin-top: var(--space-4);
+}
+
+.panel__question {
+  color: var(--cyan-bright);
+  font-size: var(--type-body-l);
+  margin-top: var(--space-2);
+}
+
+.panel__text {
+  margin-top: var(--space-4);
+}
+
+.panel__text--warn {
+  color: var(--warn);
+}
+
+.panel__brief {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-left: 2px solid var(--cyan);
+  background: var(--cyan-soft);
+  color: var(--text-1);
+  font-family: var(--font-hud);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.panel__stat {
+  margin-top: var(--space-4);
+  font-family: var(--font-hud);
+  font-size: var(--type-small);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.panel__small {
+  margin-top: var(--space-4);
+  font-size: var(--type-small);
+  color: var(--text-1);
+}
+
+.panel__alerts {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.panel__alerts li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid rgba(245, 165, 36, 0.35);
+  border-radius: var(--radius-s);
+  background: var(--warn-soft);
+  color: var(--warn);
+  font-size: var(--type-small);
+}
+
+.panel__alert-tag {
+  padding: 1px 6px;
+  border-radius: var(--radius-s);
+  background: var(--warn);
+  color: var(--bg-0);
+  font-family: var(--font-hud);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ai-tag {
+  display: inline-block;
+  margin-right: var(--space-2);
+  padding: 1px 6px;
+  border: 1px solid var(--ai);
+  border-radius: var(--radius-s);
+  background: var(--ai-soft);
+  color: var(--ai-glow);
+  font-family: var(--font-hud);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+}
+
+.panel__choices {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.pbtn {
+  min-height: 44px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-s);
+  font: inherit;
+  font-size: var(--type-small);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-micro) var(--ease-out),
+    border-color var(--dur-micro) var(--ease-out),
+    color var(--dur-micro) var(--ease-out),
+    box-shadow var(--dur-ui) var(--ease-out);
+}
+
+.pbtn--ai {
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  color: var(--text-1);
+}
+
+.pbtn--ai:hover,
+.pbtn--ai[aria-pressed='true'] {
+  border-color: var(--ai);
+  background: var(--ai-soft);
+}
+
+.pbtn--human {
+  background: var(--cyan-soft);
+  border: 1px solid var(--cyan);
+  color: var(--cyan-bright);
+}
+
+.pbtn--human:hover {
+  background: var(--cyan);
+  color: var(--bg-0);
+}
+
+.pbtn--human[aria-pressed='true'] {
+  background: var(--human);
+  border-color: var(--human);
+  color: var(--bg-0);
+  box-shadow: var(--glow-human);
+}
+
+.panel--finale {
+  left: var(--gutter);
+  top: auto;
+  bottom: var(--space-8);
+  translate: none;
+  width: min(560px, calc(100vw - var(--gutter) * 2));
+  padding: 0;
+}
+
+.panel__closing {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.4rem, 1rem + 1.8vw, 2.4rem);
+  line-height: 1.15;
+  color: var(--text-1);
+  margin-top: var(--space-3);
+  text-shadow: 0 4px 24px rgba(4, 7, 13, 0.9);
+}
+
+.panel__closing-accent {
+  display: block;
+  color: var(--cyan-bright);
+  margin-top: var(--space-2);
+}
+
+/* ── Progress rail ── */
+.rail {
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  z-index: 5;
+  display: grid;
+  gap: var(--space-3);
+  translate: 0 -50%;
+  font-family: var(--font-hud);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+}
+
+.rail__tick {
+  padding-right: var(--space-4);
+  border-right: 1px solid var(--line-strong);
+  text-align: right;
+  transition: color var(--dur-ui) var(--ease-out), border-color var(--dur-ui) var(--ease-out);
+}
+
+.rail__tick.active {
+  color: var(--cyan-bright);
+  border-color: var(--cyan);
+}
+
+.rail__tick.done {
+  color: var(--text-2);
+}
+
+/* ── After the flight ── */
+.after {
+  position: relative;
+  display: grid;
+  gap: var(--space-4);
+  max-width: 60ch;
+  margin: 0 auto;
+  padding: var(--space-10) var(--gutter);
+}
+
+/* Phones: panels sit at the bottom, the rail hides */
+@media (max-width: 767px) {
+  .panel:not(.panel--hero) {
+    top: auto;
+    bottom: var(--space-5);
+    left: var(--gutter);
+    right: var(--gutter);
+    width: auto;
+    padding: var(--space-5);
+    translate: none;
+  }
+
+  .panel--finale {
+    padding: 0;
+  }
+
+  .rail {
+    display: none;
+  }
+
+  .drone__label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drone__alert,
+  .station-alert {
+    animation: none;
+  }
+}
