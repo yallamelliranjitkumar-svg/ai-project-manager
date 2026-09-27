@@ -579,16 +579,6 @@
   color: var(--text-2);
 }
 
-/* ── After the flight ── */
-.after {
-  position: relative;
-  display: grid;
-  gap: var(--space-4);
-  max-width: 60ch;
-  margin: 0 auto;
-  padding: var(--space-10) var(--gutter);
-}
-
 /* Phones: panels sit at the bottom, the rail hides */
 @media (max-width: 767px) {
   .panel:not(.panel--hero) {

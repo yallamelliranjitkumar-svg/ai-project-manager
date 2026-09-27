@@ -30,8 +30,13 @@
   border-top: 1px solid var(--line);
 }
 
+/* Home page: no closing line above the links, so no big gap either */
+.footer--compact {
+  padding-top: var(--space-6);
+}
+
 .footer__bottom--flush {
-  margin-top: calc(var(--space-10) - var(--section-space));
+  margin-top: 0;
 }
 
 .footer__links {

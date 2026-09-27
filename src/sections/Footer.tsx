@@ -12,7 +12,7 @@ export function Footer({ showClosing = true, credit = footer.credit }: { showClo
   ]
 
   return (
-    <footer className="footer">
+    <footer className={`footer${showClosing ? '' : ' footer--compact'}`}>
       <div className="container">
         {showClosing && (
           <p className="footer__closing">

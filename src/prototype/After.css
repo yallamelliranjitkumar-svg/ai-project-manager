@@ -1,9 +1,10 @@
 /* After the film: "What it took" numbers and "About me". Same tokens as the rest of the site. */
 
 .stats,
-.about {
+.about,
+.made {
   position: relative;
-  padding-block: var(--space-9);
+  padding-block: var(--space-8);
 }
 
 .stats {
@@ -23,14 +24,17 @@
 /* ── Numbers ── */
 .stats__row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  /* 2 per row on phones, 3 on tablets and small laptops, all 5 in one row on wide screens */
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-6) var(--space-5);
   margin-top: var(--space-7);
 }
 
 .stat {
   display: grid;
+  align-content: start; /* labels line up at the same height in every column */
   gap: var(--space-2);
+  min-width: 0;
   padding-left: var(--space-4);
   border-left: 1px solid var(--cyan);
 }
@@ -38,7 +42,9 @@
 .stat__value {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(2.5rem, 1.6rem + 3vw, 4rem);
+  /* sized so the widest number (3,000+) always fits its column */
+  font-size: clamp(2rem, 1.4rem + 1.6vw, 3rem);
+  white-space: nowrap;
   line-height: 1;
   color: var(--cyan-bright);
   font-variant-numeric: tabular-nums;
@@ -195,9 +201,35 @@
   }
 }
 
+@media (min-width: 640px) {
+  .stats__row { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (min-width: 1280px) {
+  .stats__row { grid-template-columns: repeat(5, 1fr); }
+}
+
+/* How this was made: lined up on the left like the sections above */
+.about {
+  padding-bottom: var(--space-7);
+}
+
+.made {
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--line);
+}
+
+.made__text {
+  max-width: 62ch;
+  margin-top: var(--space-4);
+  font-size: var(--type-body-l);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
 /* Small phones: two numbers per row, so they need to be a bit smaller to fit ("3,000+") */
 @media (max-width: 479px) {
   .stat__value {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
 }

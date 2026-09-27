@@ -439,10 +439,6 @@ export function Flight() {
       </div>
 
       <After />
-      <section className="after">
-        <p className="label">How this was made</p>
-        <p>{footer.howMade}</p>
-      </section>
       <Footer showClosing={false} credit={footer.filmCredit} />
     </div>
   )

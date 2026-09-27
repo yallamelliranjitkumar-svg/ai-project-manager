@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { about, site, stats } from '../content/content'
+import { about, footer, site, stats } from '../content/content'
 import './After.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -106,6 +106,14 @@ export function After() {
           <a className="about__cta rise" href={site.linkedin} target="_blank" rel="noreferrer">
             {about.cta} <span aria-hidden="true">↗</span>
           </a>
+        </div>
+      </section>
+
+      {/* ── How this was made (lined up with the sections above) ── */}
+      <section className="made" aria-label="How this was made">
+        <div className="container">
+          <p className="label rise">How this was made</p>
+          <p className="made__text rise">{footer.howMade}</p>
         </div>
       </section>
     </div>
