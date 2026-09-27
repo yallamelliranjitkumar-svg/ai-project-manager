@@ -24,16 +24,19 @@ gsap.registerPlugin(ScrollTrigger)
 type Choice = 'accept' | 'override' | null
 
 // Film time (seconds) covered by each chapter, and how much scrolling it gets
-// (weight). Times come from the finished film: 04-film/aurora-flight-master.mp4
+// (weight). Times come from the finished film: 04-film/aurora-flight-v4.mp4 (all-angle version)
+//  climb (right side) · orbit right → front → left, ship flies out of frame · cut to the nebula:
+//  left side → rear · rear, into the storm · out of the storm behind the ship, station ahead →
+//  round the back to the right side · docking · whole station
 const CHAPTERS = [
   { key: 'hero', from: 0, to: 1.5, weight: 1 },
   { key: 'define', from: 1.5, to: 9.4, weight: 1.6 },
-  { key: 'plan', from: 9.4, to: 13.0, weight: 1.2 },
-  { key: 'delegate', from: 13.0, to: 15.8, weight: 1.2 },
-  { key: 'monitor', from: 15.8, to: 20.8, weight: 1.3 },
-  { key: 'decide', from: 20.8, to: 25.9, weight: 1.5 },
-  { key: 'deliver', from: 25.9, to: 41.0, weight: 2.2 },
-  { key: 'finale', from: 41.0, to: 46.0, weight: 1.8 },
+  { key: 'plan', from: 9.4, to: 14.25, weight: 1.3 },
+  { key: 'delegate', from: 14.25, to: 19.3, weight: 1.3 },
+  { key: 'monitor', from: 19.3, to: 21.9, weight: 1.3 },
+  { key: 'decide', from: 21.9, to: 24.3, weight: 1.5 },
+  { key: 'deliver', from: 24.3, to: 42.45, weight: 2.4 },
+  { key: 'finale', from: 42.45, to: 47.55, weight: 1.8 },
 ] as const
 
 // Ring labels for the finale, placed on the film's last frame (percent of the 16:9 frame)
@@ -153,15 +156,92 @@ export function Flight() {
         const filmShare = c.key === 'finale' ? 0.6 : 1
         tl.fromTo(film, { t: c.from }, { t: c.to, duration: c.weight * filmShare, immediateRender: false }, at)
 
-        // Text panel: fades in after the chapter starts, out before it ends
+        // Text: floats over the film, builds up piece by piece, drifts, then leaves
         const panel = q(`.p-${c.key}`)
-        const inAt = at + c.weight * 0.12
-        const outAt = at + c.weight * 0.82
+        const w = c.weight
+        const inAt = at + w * 0.1
+        const outAt = at + w * 0.84
         if (c.key === 'hero') {
-          tl.to(panel, { autoAlpha: 0, y: -24, duration: c.weight * 0.2, ease: 'power1.in' }, outAt)
+          tl.to(panel, { autoAlpha: 0, y: -40, duration: w * 0.2, ease: 'power1.in' }, outAt)
+        } else if (c.key === 'finale' || reduced) {
+          tl.fromTo(panel, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: w * 0.12, ease: 'power1.out' }, inAt)
+          if (c.key !== 'finale') tl.to(panel, { autoAlpha: 0, duration: w * 0.12 }, outAt)
         } else {
-          tl.fromTo(panel, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: c.weight * 0.12, ease: 'power1.out' }, inAt)
-          if (c.key !== 'finale') tl.to(panel, { autoAlpha: 0, y: -24, duration: c.weight * 0.12, ease: 'power1.in' }, outAt)
+          const part = (sel: string) => q(`.p-${c.key} ${sel}`)
+          tl.set(panel, { autoAlpha: 1 }, inAt)
+          // Slow drift the whole time it's on screen: a floating, in-space feel
+          tl.fromTo(panel, { y: 14, x: -8 }, { y: -22, x: 8, duration: w * 0.9 }, inAt)
+          // 1. label slides in  2. title rises word by word  3. question  4. sentences  5. extras
+          tl.fromTo(part('.fx-label'), { autoAlpha: 0, x: -24 }, { autoAlpha: 1, x: 0, duration: w * 0.06, ease: 'power2.out' }, inAt)
+          tl.fromTo(
+            part('.fx-word'),
+            { autoAlpha: 0, yPercent: 70, rotate: 4 },
+            { autoAlpha: 1, yPercent: 0, rotate: 0, duration: w * 0.07, stagger: w * 0.02, ease: 'power3.out' },
+            inAt + w * 0.03,
+          )
+          tl.fromTo(part('.fx-q'), { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: w * 0.06, ease: 'power2.out' }, inAt + w * 0.1)
+          tl.fromTo(
+            part('.fx-line'),
+            { autoAlpha: 0, y: 16 },
+            { autoAlpha: 1, y: 0, duration: w * 0.06, stagger: w * 0.04, ease: 'power2.out' },
+            inAt + w * 0.14,
+          )
+          tl.fromTo(
+            part('.fx-item'),
+            { autoAlpha: 0, x: -18 },
+            { autoAlpha: 1, x: 0, duration: w * 0.06, stagger: w * 0.045, ease: 'power2.out' },
+            inAt + w * 0.24,
+          )
+          tl.to(panel, { autoAlpha: 0, duration: w * 0.1, ease: 'power1.in' }, outAt)
+        }
+
+        // Things that CHANGE while you read (skipped for reduced motion: the final text just shows)
+        if (!reduced) {
+          if (c.key === 'define') {
+            // The creative brief types itself out
+            const el = q('.fx-type')[0] as HTMLElement | undefined
+            if (el) {
+              const full = el.dataset.text ?? ''
+              const typed = { n: 0 }
+              tl.fromTo(
+                typed,
+                { n: 0 },
+                {
+                  n: full.length,
+                  duration: w * 0.36,
+                  immediateRender: false,
+                  onUpdate: () => (el.textContent = full.slice(0, Math.round(typed.n))),
+                },
+                inAt + w * 0.26,
+              )
+              el.textContent = '' // starts empty, then types
+            }
+          }
+          if (c.key === 'plan') {
+            // The numbers count up
+            q('.fx-count').forEach((node: Element) => {
+              const el = node as HTMLElement
+              const end = Number(el.dataset.n)
+              const v = { n: 0 }
+              tl.fromTo(
+                v,
+                { n: 0 },
+                { n: end, duration: w * 0.2, immediateRender: false, onUpdate: () => (el.textContent = String(Math.round(v.n))) },
+                inAt + w * 0.26,
+              )
+              el.textContent = '0'
+            })
+          }
+          if (c.key === 'monitor') {
+            // Each check flips from cyan "Checking" to amber "Alert"
+            q('.fx-alert').forEach((li: Element, i: number) => {
+              const flip = inAt + w * (0.4 + i * 0.12)
+              // (colour values = --cyan-bright and --warn in tokens.css; GSAP needs real colours to blend)
+              tl.fromTo(li, { color: '#8deff7' }, { color: '#f5a524', duration: w * 0.05 }, flip)
+              tl.fromTo(li.querySelector('.fx-check'), { autoAlpha: 1 }, { autoAlpha: 0, duration: w * 0.04 }, flip)
+              tl.fromTo(li.querySelector('.fx-warn'), { autoAlpha: 0, scale: 0.6 }, { autoAlpha: 1, scale: 1, duration: w * 0.05, ease: 'back.out(3)' }, flip)
+            })
+          }
         }
 
         // Extra effects per chapter
@@ -252,42 +332,65 @@ export function Flight() {
               {hero.lines[0]}
               <br />I build <span className="ai-text">with AI</span>.
             </h1>
+            <p className="panel__hero-proof">{hero.proof}</p>
             <p className="panel__cue label">Scroll to launch ↓</p>
           </section>
 
-          <Panel cls="p-define" pos="bl" index={0} ch={define}>
-            <p className="panel__brief">{define.brief}</p>
+          {/* Each chapter sits in the empty part of its shot (see pos) */}
+          <Panel cls="p-define" pos="tl" index={0} ch={define}>
+            {/* The brief types itself out: the invisible copy keeps the space, the visible copy is typed */}
+            <p className="panel__brief fx-item">
+              <span className="panel__brief-ghost" aria-hidden="true">
+                {define.brief}
+              </span>
+              <span className="panel__brief-typed fx-type" data-text={define.brief}>
+                {define.brief}
+              </span>
+            </p>
           </Panel>
-          <Panel cls="p-plan" pos="bl" index={1} ch={plan}>
-            <p className="panel__stat">{plan.stat}</p>
+          <Panel cls="p-plan" pos="tr" index={1} ch={plan}>
+            <p className="panel__stat fx-item">
+              {plan.stats?.map((s, i) => (
+                <span key={s.label}>
+                  {i > 0 && ' · '}
+                  <span className="panel__stat-n fx-count" data-n={s.n}>
+                    {s.n}
+                  </span>{' '}
+                  {s.label}
+                </span>
+              ))}
+            </p>
           </Panel>
-          <Panel cls="p-delegate" pos="br" index={2} ch={delegate}>
+          <Panel cls="p-delegate" pos="tr" index={2} ch={delegate}>
             <ul className="panel__agents">
               {delegate.agents?.map((a) => (
-                <li key={a.agent}>
+                <li key={a.agent} className="fx-item">
                   <span className="ai-tag">AI</span>
                   {a.agent}
                 </li>
               ))}
             </ul>
           </Panel>
-          <Panel cls="p-monitor" pos="br" index={3} ch={monitor}>
+          <Panel cls="p-monitor" pos="tr" index={3} ch={monitor}>
             <ul className="panel__alerts">
               {monitor.warnings?.map((w) => (
-                <li key={w}>
-                  <span className="panel__alert-tag">Alert</span>
+                <li key={w} className="fx-item fx-alert">
+                  <span className="panel__alert-tags">
+                    <span className="panel__check-tag fx-check">{monitor.checking}</span>
+                    <span className="panel__alert-tag fx-warn">{monitor.alert}</span>
+                  </span>
                   {w}
                 </li>
               ))}
             </ul>
           </Panel>
-          <Panel cls="p-decide" pos="r" index={4} ch={decide}>
-            <p className="panel__small">
+          <Panel cls="p-decide" pos="l" index={4} ch={decide}>
+            <p className="panel__small fx-item">
               <span className="ai-tag">AI</span>
               {decide.recommendation}
             </p>
-            <p className="panel__small panel__muted">{decide.missing}</p>
-            <div className="panel__choices">
+            <p className="panel__small panel__muted fx-item">{decide.missing}</p>
+            <div className="panel__choices fx-item">
               <button className="pbtn pbtn--ai" aria-pressed={choice === 'accept'} onClick={() => setChoice('accept')}>
                 {decide.accept}
               </button>
@@ -338,20 +441,35 @@ type PanelProps = {
   cls: string
   index: number
   ch: { title: string; ward: string; question: string; text: string }
-  pos: 'bl' | 'br' | 'tl' | 'r'
+  pos: 'tl' | 'tr' | 'l'
   warn?: boolean
   children?: ReactNode
 }
 
+// Chapter text floating over the film (no box). It's split into small pieces (fx-*)
+// so the scroll timeline can bring them in one after another.
 function Panel({ cls, pos, index, ch, warn, children }: PanelProps) {
+  const sentences = ch.text.split(/(?<=\.)\s+/)
   return (
-    <section className={`panel panel--${pos} hud ${cls}`}>
-      <span className="label">
+    <section className={`panel panel--${pos} panel--free ${cls}`}>
+      <span className="label fx-label">
         0{index + 1} / 06 · {ch.ward}
       </span>
-      <h2 className="panel__title">{ch.title}</h2>
-      <p className="panel__question">{ch.question}</p>
-      <p className={`panel__text${warn ? ' panel__text--warn' : ''}`}>{ch.text}</p>
+      <h2 className="panel__title" aria-label={ch.title}>
+        {[...ch.title].map((letter, i) => (
+          <span key={i} className="fx-word" aria-hidden="true">
+            {letter}
+          </span>
+        ))}
+      </h2>
+      <p className="panel__question fx-q">{ch.question}</p>
+      <p className={`panel__text${warn ? ' panel__text--warn' : ''}`}>
+        {sentences.map((s, i) => (
+          <span key={`${s}-${i}`} className="fx-line">
+            {s}{' '}
+          </span>
+        ))}
+      </p>
       {children}
     </section>
   )

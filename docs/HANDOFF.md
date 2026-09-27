@@ -116,3 +116,12 @@
 
 ## 10. Restart Prompt
 Read `docs/HANDOFF.md` in `C:\Users\HP\AI-WEB-LAB\final-project` (and `docs/SCROLL-ANIMATION-PLAN.md` §9). I'm a beginner: explain in plain English and go one step at a time, waiting for my "done". First ask me how I want to handle the Pinterest image licensing (see section 7). Then start the all-angles plan: first do the free steps (build keyframe L and restore the full orbit in the edit), show me the results, then give me the Kling instructions for shot A only.
+
+## 11. Update (later on 2026-09-27): all-angle film live on the home page
+- The scroll film is now the **home page** (`index.html` → `src/prototype/main.tsx`); the old R3F design is kept at `/classic.html` (noindex); `/prototype.html` forwards to `/` (public/prototype.html).
+- Licensing (section 7): user chose **decide later**; no promotion yet.
+- Kling credits: user had **140 in total**; 120 spent on this round, **20 left**.
+- New film **v4** (47.58 s) = shot1 | orbit (right → front → left) | P free cut-out exit (ship leaves frame) | *cut* | N (left side → rear at the nebula) | shot5-take-a (rear, into the storm) | T1 0–72 (out of the storm, behind the ship, station far ahead) | T2 (round the back to the right side) | shot7 (docking) | shot8. Details, joins and verdicts in `inspiration/scroll/log.txt` (STEP 6–9); chosen clips in `03-chosen/`; master `04-film/aurora-flight-v4.mp4`.
+- New keyframes: `L-ship-left-at-nebula.jpg`, `S-behind-ship-station-far.jpg`, `S2-shotT1-frame72.jpg`. New tools: `cutL.cjs` (cut-out), `keyL.cjs`, `keyS.cjs`, `makeP.cjs`, `seams2.cjs` (join check for any clip list), `webenc3.cjs` (final web settings + poster).
+- `Flight.tsx` CHAPTERS retimed for v4; Delegate/Monitor panels moved bottom-left and Decide to a new left position (`panel--l`) because the ship now fills the right half in those chapters.
+- Possible next: paid Kling version of P (30 credits) if the flat cut-out exit bothers the user; T2 mid-swing lighting is slightly brighter for ~1 s (accepted).

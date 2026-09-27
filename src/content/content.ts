@@ -19,6 +19,7 @@ export const hero = {
     'This site was designed, written and built by directing AI as a full product team: designer, developer, QA and project manager. I made the calls. Scroll to see how a project comes to life.',
   scrollCue: 'Begin approach',
   status: 'Aurora Station · Low Earth orbit · 408 km',
+  proof: 'This website is the proof. Scroll to see how I built it with AI, from idea to launch.',
 }
 
 export const journey = {
@@ -61,65 +62,75 @@ export const process = {
   ],
 }
 
+// The six chapters tell the real story of how THIS website was built by directing AI.
 export const chapters = [
   {
     id: 'define',
-    ward: 'Core',
+    ward: 'Ideation',
     title: 'Define',
     question: "What's the problem?",
-    text: 'Every project starts as a bare idea. Before any work begins, someone has to write down what success looks like.',
+    text: 'Every project starts with a question. Mine: can someone who has never written code build a real product, just by directing AI?',
     brief:
-      'Project brief: Launch an AI triage assistant across 3 clinics. Reduce patient wait times by 20% within 6 months. Keep patient data safe.',
+      'Creative brief: a portfolio site that proves I can turn an idea into a working product with AI. Audience: my LinkedIn network and hiring managers in healthcare IT, AI and project management. Rule: the human stays in charge.',
   },
   {
     id: 'plan',
-    ward: 'Core → Ring',
+    ward: 'Requirements',
     title: 'Plan',
     question: 'What needs to happen?',
-    text: 'The idea breaks into tasks, and the tasks connect. A plan is a network of dependencies, not a list.',
-    stat: '24 tasks · 5 workstreams',
+    text: 'Before a single line of code, the AI asked and I answered: audience, colours, fonts, hosting, links. Design came first, then the build, one phase at a time.',
+    stat: '1 brief · 1 design system · 6 build phases',
+    // The same numbers, counted up on the home page
+    stats: [
+      { n: 1, label: 'brief' },
+      { n: 1, label: 'design system' },
+      { n: 6, label: 'build phases' },
+    ],
   },
   {
     id: 'delegate',
-    ward: 'Command Deck',
+    ward: 'Team',
     title: 'Delegate',
     question: 'Who does what?',
-    text: 'Specialist AI agents take on the work they are best at. The project manager decides who owns what.',
+    text: 'I hired an AI product team. Each member had one job. I decided who did what, and approved every step.',
     agents: [
-      { domain: 'Strategy', agent: 'Strategy Agent', role: 'Keeps every task tied to the goal.' },
-      { domain: 'People', agent: 'Stakeholder Agent', role: 'Tracks who needs to know, and who needs to agree.' },
-      { domain: 'Data', agent: 'Data Agent', role: 'Checks data quality, access and privacy.' },
-      { domain: 'Risk', agent: 'Risk Agent', role: 'Watches for what could go wrong, early.' },
-      { domain: 'Execution', agent: 'Delivery Agent', role: 'Moves tasks forward and flags blockers.' },
+      { domain: 'Architecture', agent: 'Claude · Architect', role: 'Chose the technology and the structure of the site.' },
+      { domain: 'Design', agent: 'Claude · Designer', role: 'Wrote the design system: colours, fonts, layout.' },
+      { domain: 'Code', agent: 'Claude · Developer', role: 'Wrote every line of code.' },
+      { domain: 'Quality', agent: 'Claude · QA tester', role: 'Checked every page and every film frame.' },
+      { domain: 'Film', agent: 'Kling AI · Film crew', role: 'Generated the flight film, 5 seconds at a time.' },
     ],
   },
   {
     id: 'monitor',
-    ward: 'Diagnostics Lab',
+    ward: 'QA',
     title: 'Monitor',
     question: 'What could go wrong?',
-    text: 'The agents never stop watching. When something drifts, it turns amber, long before it turns into a crisis.',
-    warnings: ['Data quality below threshold', 'Clinical sign-off pending'],
+    text: 'Every AI output was checked, frame by frame. When something drifted, it was caught before it reached you.',
+    warnings: ['360° camera orbit: the ship melted', 'Ship suddenly flew the wrong way'],
+    // Each alert shows this first, then flips to "Alert"
+    checking: 'Checking',
+    alert: 'Alert',
   },
   {
     id: 'decide',
-    ward: 'Core',
+    ward: 'Decision',
     title: 'Decide',
     question: 'Who makes the call?',
-    text: 'AI brings the evidence. The human brings the context. Now it is your call.',
+    text: 'AI brings the evidence. The human brings the judgement. Now it is your call.',
     recommendation:
-      'AI recommendation: Launch on schedule. 92% of tasks are complete and risk is within tolerance.',
-    missing: "What the AI can't see: the clinical team hasn't signed off on the patient-data workflow.",
+      'AI check: keep the final shot as it is. Technically clean: no jumps, smooth, ship stays docked.',
+    missing: "What the AI can't see: it feels slow. Visitors will scroll past a boring ending.",
     accept: 'Accept AI recommendation',
     override: 'Override with human judgement',
   },
   {
     id: 'deliver',
-    ward: 'New AI Ward',
+    ward: 'Launch',
     title: 'Deliver',
     question: 'Did it work?',
-    text: 'Delivered. One week later than the AI suggested. Safe launch, clinicians on board.',
-    acceptText: 'Delivered on time. But one warning never cleared. The data was right. The context was missing.',
+    text: 'Launched with the ending at double speed. Same footage, better story. The call was about feeling, not data.',
+    acceptText: 'Launched on the first cut. Technically perfect, but the ending dragged and the story lost its pace.',
   },
 ]
 
@@ -144,5 +155,5 @@ export const footer = {
   credit: 'Designed and built by directing Claude Code. Earth imagery: NASA.',
   filmCredit: 'Designed and built by directing Claude Code. Flight film generated with Kling AI.',
   howMade:
-    'The flight film was generated with Kling AI, shot by shot from start and end frames, then joined, checked frame by frame and prepared for the web by Claude Code. Every word, panel and button on top of it is real web page, built the same way.',
+    'Built in 2 days by directing AI. Claude Code wrote every line of code, designed the pages and checked the work. Kling AI generated the flight film, 5 seconds at a time. Claude built the start and end frames and joined the shots. My job: the idea, the requirements, the reviews, and every final decision.',
 }
