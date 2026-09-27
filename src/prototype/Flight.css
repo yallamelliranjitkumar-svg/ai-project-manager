@@ -208,6 +208,38 @@
   .panel .panel__text { margin-top: var(--space-3); }
 }
 
+/* Phones turned sideways (short and wide): compact text so every chapter fits the screen */
+@media (max-height: 500px) and (min-width: 568px) {
+  .panel { width: min(46vw, 420px); }
+  .panel--tl, .panel--tr, .panel--l { top: 66px; }
+  .panel .panel__title { font-size: 1.5rem; margin-top: var(--space-1); }
+  .panel .panel__question { font-size: 0.875rem; margin-top: var(--space-1); }
+  .panel .panel__text,
+  .panel .panel__small,
+  .panel .panel__alerts li { font-size: 0.75rem; line-height: 1.45; }
+  .panel .panel__text { margin-top: var(--space-2); }
+  .panel .panel__small { margin-top: var(--space-2); }
+  .panel .panel__brief { font-size: 0.6875rem; line-height: 1.5; margin-top: var(--space-2); }
+  .panel .panel__stat,
+  .panel .panel__agents,
+  .panel .panel__alerts { margin-top: var(--space-2); }
+  .panel .panel__agents li { font-size: 0.6875rem; }
+  .panel .panel__choices { grid-template-columns: 1fr 1fr; gap: var(--space-2); margin-top: var(--space-2); }
+  .panel .pbtn { min-height: 36px; padding: var(--space-1) var(--space-2); font-size: 0.75rem; }
+
+  /* (.stage prefix: these must win over the rules further down this file) */
+  .stage .panel--hero { top: 66px; }
+  .stage .panel__hero-title { font-size: 2.25rem; margin-top: var(--space-2); }
+  .stage .panel__hero-proof { font-size: 0.875rem; margin-top: var(--space-2); }
+  .stage .panel__cue { margin-top: var(--space-3); }
+
+  .stage .panel--finale { bottom: var(--space-4); width: min(46vw, 420px); }
+  .stage .panel__closing { font-size: 1.125rem; }
+
+  /* No room for the progress ticks */
+  .rail { display: none; }
+}
+
 /* Pieces animated one by one (see Flight.tsx) */
 .fx-word {
   display: inline-block;

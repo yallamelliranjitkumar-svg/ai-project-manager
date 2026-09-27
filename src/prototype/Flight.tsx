@@ -8,6 +8,8 @@ import { Footer } from '../sections/Footer'
 import './Flight.css'
 
 gsap.registerPlugin(ScrollTrigger)
+// Phones: the address bar sliding in and out resizes the window; don't re-measure the page for that
+ScrollTrigger.config({ ignoreMobileResize: true })
 
 // ─────────────────────────────────────────────────────────────
 // SCROLL FILM (the home page)
@@ -81,18 +83,25 @@ export function Flight() {
         if (cancelled) return
         objectUrl = URL.createObjectURL(new Blob(parts as BlobPart[], { type: 'video/mp4' }))
         const v = video.current!
-        v.addEventListener(
-          'loadeddata',
-          () => {
-            // Some phones only show frames after the video has "played" once
-            v.play()
-              .then(() => v.pause())
-              .catch(() => {})
-              .finally(() => setReady(true))
-          },
-          { once: true },
-        )
+        // The loading message must always clear. Phones differ in which "ready" signal they
+        // send (iPhones may send none unless told to load), so accept any of them, and as a
+        // safety net clear it a few seconds after the download finished anyway.
+        let done = false
+        const markReady = () => {
+          if (done || cancelled) return
+          done = true
+          setReady(true)
+          ScrollTrigger.refresh() // measure the page again now the film is ready
+          // Some phones only show frames after the video has "played" once (don't wait for it)
+          v.play()
+            .then(() => v.pause())
+            .catch(() => {})
+        }
+        for (const ev of ['loadedmetadata', 'loadeddata', 'canplay']) v.addEventListener(ev, markReady, { once: true })
+        setTimeout(markReady, 3000)
+        v.preload = 'auto'
         v.src = objectUrl
+        v.load()
       } catch {
         setLoaded(-1) // keep the poster; the text story still works
       }

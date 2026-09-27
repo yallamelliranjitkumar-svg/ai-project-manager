@@ -34,3 +34,10 @@
 .nav__link:hover {
   border-color: var(--cyan);
 }
+
+/* Phones turned sideways: a slimmer bar leaves more room for the film */
+@media (max-height: 500px) and (min-width: 568px) {
+  .nav {
+    padding-block: var(--space-2);
+  }
+}
