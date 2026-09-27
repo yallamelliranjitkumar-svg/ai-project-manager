@@ -5,6 +5,7 @@ import Lenis from 'lenis'
 import { chapters, footer, hero } from '../content/content'
 import { Nav } from '../sections/Nav'
 import { Footer } from '../sections/Footer'
+import { After } from './After'
 import './Flight.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -437,6 +438,7 @@ export function Flight() {
         </div>
       </div>
 
+      <After />
       <section className="after">
         <p className="label">How this was made</p>
         <p>{footer.howMade}</p>

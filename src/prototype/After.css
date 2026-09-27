@@ -1,0 +1,203 @@
+/* After the film: "What it took" numbers and "About me". Same tokens as the rest of the site. */
+
+.stats,
+.about {
+  position: relative;
+  padding-block: var(--space-9);
+}
+
+.stats {
+  padding-top: var(--section-space);
+  border-bottom: 1px solid var(--line);
+}
+
+.after__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--type-h2);
+  line-height: 1.1;
+  color: var(--text-1);
+  margin-top: var(--space-3);
+}
+
+/* ── Numbers ── */
+.stats__row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-6) var(--space-5);
+  margin-top: var(--space-7);
+}
+
+.stat {
+  display: grid;
+  gap: var(--space-2);
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--cyan);
+}
+
+.stat__value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 1.6rem + 3vw, 4rem);
+  line-height: 1;
+  color: var(--cyan-bright);
+  font-variant-numeric: tabular-nums;
+}
+
+/* "0 lines of code written by me": the human's number, in warm white */
+.stat:nth-child(4) {
+  border-color: var(--human);
+}
+
+.stat:nth-child(4) .stat__value {
+  color: var(--human);
+}
+
+.stat__label {
+  font-size: var(--type-small);
+  line-height: 1.45;
+  color: var(--text-2);
+  max-width: 22ch;
+}
+
+/* ── About me ── */
+.about__intro {
+  max-width: 62ch;
+  margin-top: var(--space-5);
+  font-size: var(--type-body-l);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.about__intro strong {
+  color: var(--text-1);
+  font-weight: 600;
+}
+
+/* Career steps: a line with a dot for each step (a flight path) */
+.about__steps {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-8);
+}
+
+.about__step {
+  position: relative;
+  padding-left: var(--space-6);
+  border-left: 1px solid var(--line-strong);
+}
+
+.about__step::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 4px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: var(--glow-cyan);
+}
+
+/* The current role glows violet: where AI comes in */
+.about__step:last-child::before {
+  background: var(--ai);
+  box-shadow: var(--glow-ai);
+}
+
+.about__years {
+  color: var(--cyan-bright);
+}
+
+.about__role {
+  margin-top: var(--space-2);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--type-h3);
+  line-height: 1.25;
+  color: var(--text-1);
+}
+
+.about__org {
+  margin-top: var(--space-1);
+  font-size: var(--type-small);
+  color: var(--text-3);
+}
+
+.about__text {
+  margin-top: var(--space-3);
+  max-width: 60ch;
+  font-size: var(--type-body);
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.about__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-8);
+}
+
+.about__skills li {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-hud);
+  font-size: var(--type-hud);
+  letter-spacing: 0.06em;
+  color: var(--text-1);
+}
+
+.about__skills li:last-child {
+  border-color: var(--ai);
+  background: var(--ai-soft);
+  color: var(--ai-glow);
+}
+
+.about__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  margin-top: var(--space-7);
+  padding: var(--space-3) var(--space-5);
+  border: 1px solid var(--cyan);
+  border-radius: var(--radius-pill);
+  background: var(--cyan-soft);
+  color: var(--cyan-bright);
+  font-weight: 600;
+  transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+}
+
+.about__cta:hover {
+  background: var(--cyan);
+  color: var(--bg-0);
+}
+
+/* Wider screens: the career path runs across in four columns */
+@media (min-width: 1024px) {
+  .about__steps {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-5);
+  }
+
+  .about__step {
+    padding-left: 0;
+    padding-top: var(--space-6);
+    border-left: 0;
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .about__step::before {
+    left: 0;
+    top: -5px;
+  }
+}
+
+/* Small phones: two numbers per row, so they need to be a bit smaller to fit ("3,000+") */
+@media (max-width: 479px) {
+  .stat__value {
+    font-size: 2rem;
+  }
+}

@@ -49,6 +49,55 @@ export const journey = {
   ],
 }
 
+// Home page, after the film: real numbers from building this site (see inspiration/scroll/log.txt and git history)
+export const stats = {
+  label: 'Mission log',
+  title: 'What it took',
+  items: [
+    { n: 2, suffix: '', label: 'days, idea to launch' },
+    { n: 19, suffix: '', label: 'AI video takes (8 made the final film)' },
+    { n: 3000, suffix: '+', label: 'lines of code, all written by AI' },
+    { n: 0, suffix: '', label: 'lines of code written by me' },
+    { n: 6, suffix: '', label: 'build phases' },
+  ],
+}
+
+// Home page: About me (from Ranjit's LinkedIn experience; client names kept general on purpose)
+export const about = {
+  label: 'Crew profile',
+  title: 'About me',
+  intro:
+    '7+ years in healthcare IT, supporting the clinical systems hospitals run on. I know how technology fails in real workflows, and how to get it working again. Now I build with AI.',
+  steps: [
+    {
+      years: '2019 – 2021',
+      role: 'Technical Analyst',
+      org: 'HCL Technologies',
+      text: 'Solved application, device and access issues for the staff of a global healthcare company. Learned how systems break, and how to fix them fast.',
+    },
+    {
+      years: '2021',
+      role: 'Senior Technical Analyst',
+      org: 'HCL Technologies',
+      text: 'First point of contact for Level 1 analysts. Coached a team of 10+ to production-ready, ran root cause analysis and kept SLAs on track.',
+    },
+    {
+      years: '2022 – 2026',
+      role: 'Clinical Applications Senior Analyst',
+      org: 'HCL Technologies · Accenture',
+      text: 'Cerner Millennium EHR support for a US health system: provider profiles, interfaces, ServiceNow dashboards, and root cause analysis across clinical teams.',
+    },
+    {
+      years: '2026 – now',
+      role: 'Packaged App Development Specialist',
+      org: 'Accenture',
+      text: 'Working with clients to optimise workflows and cut turnaround time, and exploring how generative AI can improve clinical tech support.',
+    },
+  ],
+  skills: ['Cerner Millennium', 'EHR / EMR', 'ServiceNow', 'Root cause analysis', 'Team coaching', 'Generative AI'],
+  cta: 'Connect on LinkedIn',
+}
+
 export const process = {
   label: 'Launch sequence · How this site was made',
   title: 'Idea to product, directed by a human',
