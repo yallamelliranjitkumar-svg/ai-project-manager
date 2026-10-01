@@ -1,0 +1,277 @@
+/* Page reveal: two blast doors over the whole screen (see Reveal.tsx) */
+
+.reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 100; /* above the top bar and everything else */
+  pointer-events: auto;
+}
+
+/* ── The doors ── */
+.rv-door {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 50%;
+  overflow: hidden;
+  background:
+    /* fine engineering grid */
+    repeating-linear-gradient(to right, rgba(214, 236, 242, 0.035) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(to bottom, rgba(214, 236, 242, 0.035) 0 1px, transparent 1px 80px),
+    radial-gradient(ellipse at 50% 100%, rgba(139, 92, 246, 0.16), transparent 60%),
+    var(--bg-0);
+  will-change: transform;
+}
+
+.rv-door--top {
+  top: 0;
+}
+
+.rv-door--bottom {
+  bottom: 0;
+  background:
+    repeating-linear-gradient(to right, rgba(214, 236, 242, 0.035) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(to bottom, rgba(214, 236, 242, 0.035) 0 1px, transparent 1px 80px),
+    radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.16), transparent 60%),
+    var(--bg-0);
+  background-position: 0 100%;
+}
+
+/* Each door holds a full-screen picture; the bottom door shows its lower half */
+.rv-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 200%;
+  top: 0;
+}
+
+.rv-door--bottom .rv-content {
+  top: -100%;
+}
+
+/* Glowing edge where the doors meet, lit when they unlock */
+.rv-seam-glow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 2;
+  visibility: hidden;
+  background: linear-gradient(to right, transparent, var(--ai-bright) 20%, var(--cyan-bright) 50%, var(--ai-bright) 80%, transparent);
+  box-shadow: 0 0 24px 4px rgba(139, 92, 246, 0.55);
+}
+
+.rv-door--top .rv-seam-glow { bottom: 0; }
+.rv-door--bottom .rv-seam-glow { top: 0; }
+
+/* ── The laser cut across the middle, and the white flash ── */
+.rv-laser {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  margin-top: -1px;
+  z-index: 3;
+  visibility: hidden;
+  background: linear-gradient(to right, transparent, #fff 15%, #fff 85%, transparent);
+  box-shadow:
+    0 0 12px 2px rgba(141, 239, 247, 0.9),
+    0 0 60px 10px rgba(139, 92, 246, 0.6);
+}
+
+.rv-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  visibility: hidden;
+  pointer-events: none;
+  background: radial-gradient(ellipse 80% 6% at 50% 50%, rgba(234, 248, 251, 0.55), transparent 70%);
+}
+
+/* ── Viewfinder corners ── */
+.rv-corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-color: var(--cyan);
+  border-style: solid;
+  border-width: 0;
+  opacity: 0.8;
+}
+
+.rv-corner--tl { left: var(--gutter); top: var(--gutter); border-left-width: 1px; border-top-width: 1px; transform-origin: 0 0; }
+.rv-corner--tr { right: var(--gutter); top: var(--gutter); border-right-width: 1px; border-top-width: 1px; transform-origin: 100% 0; }
+.rv-corner--bl { left: var(--gutter); bottom: var(--gutter); border-left-width: 1px; border-bottom-width: 1px; transform-origin: 0 100%; }
+.rv-corner--br { right: var(--gutter); bottom: var(--gutter); border-right-width: 1px; border-bottom-width: 1px; transform-origin: 100% 100%; }
+
+/* ── Top labels ── */
+.rv-top {
+  position: absolute;
+  left: calc(var(--gutter) + 44px);
+  right: calc(var(--gutter) + 44px);
+  top: calc(var(--gutter) + 6px);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.rv-meta {
+  color: var(--text-2);
+}
+
+/* ── Title, centred on the seam so the doors cut it in two ── */
+.rv-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  translate: 0 -50%;
+  display: grid;
+  justify-items: center;
+  padding-inline: var(--gutter);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 6.4vw, 9rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-align: center;
+  color: var(--text-1);
+  text-transform: uppercase;
+}
+
+.rv-line {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.04em;
+}
+
+.rv-word {
+  display: inline-block;
+  white-space: nowrap;
+  margin-inline: 0.14em;
+}
+
+/* "The AI" in violet: the AI role colour */
+.rv-line:first-child {
+  color: var(--ai-glow);
+}
+
+.rv-letter {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* ── Bottom: status, progress bar and the big counter ── */
+.rv-bottom {
+  position: absolute;
+  left: calc(var(--gutter) + 44px);
+  right: calc(var(--gutter) + 8px);
+  bottom: calc(var(--gutter) + 4px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.rv-left {
+  display: grid;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  min-width: 0;
+}
+
+.rv-status {
+  color: var(--cyan-bright);
+}
+
+.rv-by {
+  color: var(--text-3);
+}
+
+.rv-bar {
+  display: block;
+  width: min(320px, 42vw);
+  height: 1px;
+  background: var(--line-strong);
+  transform-origin: 0 50%;
+}
+
+.rv-bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--ai-bright);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.8);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+.rv-count-mask {
+  overflow: hidden;
+}
+
+.rv-count-wrap {
+  display: flex;
+  align-items: flex-start;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 0.85;
+  color: var(--text-1);
+}
+
+.rv-count {
+  font-size: clamp(4rem, 2rem + 9vw, 11rem);
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.rv-pct {
+  margin-top: 0.4em;
+  margin-left: 0.15em;
+  font-family: var(--font-hud);
+  font-size: 0.875rem;
+  color: var(--cyan-bright);
+}
+
+/* Phones: fewer labels, everything stacked */
+@media (max-width: 640px) {
+  .rv-top {
+    left: calc(var(--gutter) + 12px);
+    right: calc(var(--gutter) + 12px);
+    top: calc(var(--gutter) + 40px);
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .rv-bottom {
+    left: calc(var(--gutter) + 12px);
+    right: calc(var(--gutter) + 4px);
+    bottom: calc(var(--gutter) + 12px);
+  }
+
+  .rv-by { display: none; }
+  .rv-bar { width: 100%; }
+  .rv-left { flex: 1; }
+  .rv-count-mask { flex-shrink: 0; }
+  .rv-count { font-size: 4rem; }
+}
+
+/* Phones turned sideways: shorter screen */
+@media (max-height: 500px) {
+  .rv-title { font-size: clamp(2rem, 9svh, 4rem); }
+  .rv-count { font-size: clamp(3rem, 16svh, 5rem); }
+  .rv-by { display: none; }
+}
+
+/* ── Hero words rise into place after the doors open (wrapped in masks) ── */
+.hero-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.hero-in {
+  display: block;
+}

@@ -6,6 +6,7 @@ import { chapters, footer, hero } from '../content/content'
 import { Nav } from '../sections/Nav'
 import { Footer } from '../sections/Footer'
 import { After } from './After'
+import { Reveal } from './Reveal'
 import './Flight.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -58,6 +59,8 @@ export function Flight() {
   const [active, setActive] = useState('hero')
   const [loaded, setLoaded] = useState(0) // film download, 0–100 (-1 = failed)
   const [ready, setReady] = useState(false)
+  const [opened, setOpened] = useState(false) // the intro doors have opened
+  const lenisRef = useRef<Lenis | null>(null)
   const [define, plan, delegate, monitor, decide, deliver] = chapters
 
   // ── 1. Download the whole film first, so jumping to any frame is instant.
@@ -121,6 +124,8 @@ export function Flight() {
     const raf = (time: number) => lenis?.raf(time * 1000)
     if (!reduced) {
       lenis = new Lenis({ lerp: 0.09 })
+      lenisRef.current = lenis
+      lenis.stop() // no scrolling until the intro doors open (see Reveal.tsx)
       lenis.on('scroll', ScrollTrigger.update)
       gsap.ticker.add(raf)
       gsap.ticker.lagSmoothing(0)
@@ -287,8 +292,24 @@ export function Flight() {
       gsap.ticker.remove(raf)
       gsap.ticker.remove(seek)
       lenis?.destroy()
+      lenisRef.current = null
     }
   }, [])
+
+  // While the intro doors are shut, the page can't scroll (touch screens included)
+  useEffect(() => {
+    if (opened) return
+    const html = document.documentElement
+    html.style.overflow = 'hidden'
+    return () => {
+      html.style.overflow = ''
+    }
+  }, [opened])
+
+  const openDoors = () => {
+    setOpened(true)
+    lenisRef.current?.start()
+  }
 
   const deliverText = choice === 'accept' && deliver.acceptText ? deliver.acceptText : deliver.text
 
@@ -329,7 +350,8 @@ export function Flight() {
             <path className="signal signal--human" pathLength={1} d="M 0 780 Q 400 640, 800 450" />
           </svg>
 
-          {!ready && loaded >= 0 && (
+          {/* Only if the doors gave up waiting on a very slow connection */}
+          {opened && !ready && loaded >= 0 && (
             <div className="loader label" role="status">
               Requesting docking clearance… {loaded}%
             </div>
@@ -337,13 +359,26 @@ export function Flight() {
 
           {/* ── Text panels (real HTML, so they stay sharp and readable) ── */}
           <section className="panel panel--hero p-hero">
-            <span className="label">{hero.status}</span>
-            <h1 className="panel__hero-title">
-              {hero.lines[0]}
-              <br />I build <span className="ai-text">with AI</span>.
+            {/* hero-mask / hero-in: each piece rises out of its own mask after the intro doors open */}
+            <span className="hero-mask">
+              <span className="hero-in label">{hero.status}</span>
+            </span>
+            <h1 className="panel__hero-title" aria-label={hero.lines.join(' ')}>
+              <span className="hero-mask" aria-hidden="true">
+                <span className="hero-in">{hero.lines[0]}</span>
+              </span>
+              <span className="hero-mask" aria-hidden="true">
+                <span className="hero-in">
+                  I build <span className="ai-text">with AI</span>.
+                </span>
+              </span>
             </h1>
-            <p className="panel__hero-proof">{hero.proof}</p>
-            <p className="panel__cue label">Scroll to launch ↓</p>
+            <span className="hero-mask">
+              <span className="hero-in panel__hero-proof">{hero.proof}</span>
+            </span>
+            <span className="hero-mask">
+              <span className="hero-in panel__cue label">Scroll to launch ↓</span>
+            </span>
           </section>
 
           {/* Each chapter sits in the empty part of its shot (see pos) */}
@@ -440,6 +475,7 @@ export function Flight() {
 
       <After />
       <Footer showClosing={false} credit={footer.filmCredit} />
+      <Reveal loaded={loaded} ready={ready} onOpen={openDoors} />
     </div>
   )
 }
